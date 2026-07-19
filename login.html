@@ -1,27 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKR AMS - Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Resident Login | AKR AMS</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.login-box{
+    width:90%;
+    max-width:400px;
+    margin:40px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.login-box h2{
+    text-align:center;
+    color:#1565C0;
+    margin-bottom:20px;
+}
+
+.logo{
+    font-size:60px;
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.btn-login{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#1565C0;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-login:hover{
+    background:#0D47A1;
+}
+
+.note{
+    margin-top:20px;
+    text-align:center;
+    color:#777;
+    font-size:14px;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    text-decoration:none;
+    color:#1565C0;
+    font-weight:bold;
+}
+</style>
+
 </head>
+
 <body>
 
+<header>
 <h1>🏢 AKR House Apartment</h1>
+<p>Resident Login</p>
+</header>
+
+<div class="login-box">
+
+<div class="logo">
+🏠
+</div>
 
 <h2>Login</h2>
 
-<form>
-    <label>Mobile Number</label><br>
-    <input type="text" placeholder="Enter Mobile Number"><br><br>
+<form id="loginForm">
 
-    <label>Password</label><br>
-    <input type="password" placeholder="Enter Password"><br><br>
+<label>Mobile Number</label>
 
-    <button type="submit">Login</button>
+<input
+type="tel"
+id="mobile"
+placeholder="Enter Mobile Number"
+maxlength="10"
+required>
+
+<label>Password</label>
+
+<input
+type="password"
+id="password"
+placeholder="Enter Password"
+required>
+
+<button
+type="submit"
+class="btn-login">
+Login
+</button>
+
 </form>
 
-<p>New Resident? Register Here</p>
+<p class="note">
+Don't have an account?
+</p>
+
+<a
+href="register.html"
+class="btn">
+Register Now
+</a>
+
+<a
+href="index.html"
+class="back">
+⬅ Back to Home
+</a>
+
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const mobile=document.getElementById("mobile").value;
+const password=document.getElementById("password").value;
+
+if(mobile.length!=10){
+alert("Please enter a valid 10-digit mobile number.");
+return;
+}
+
+if(password.length<4){
+alert("Password must be at least 4 characters.");
+return;
+}
+
+/* Temporary login until Google Sheets integration */
+alert("Login Successful!");
+
+window.location.href="resident.html";
+
+});
+</script>
 
 </body>
 </html>
