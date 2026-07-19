@@ -1,0 +1,423 @@
+/* ======================================
+   AKR AMS - Complaints Module
+====================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#333;
+}
+
+.main-content{
+    margin-left:260px;
+    padding:25px;
+}
+
+/* Top Bar */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.topbar h1{
+    color:#1565C0;
+    font-size:30px;
+}
+
+.topbar p{
+    color:#666;
+    margin-top:5px;
+}
+
+#addComplaintBtn{
+
+    background:#1565C0;
+
+    color:#fff;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+#addComplaintBtn:hover{
+
+    background:#0D47A1;
+
+}
+
+/* Summary Cards */
+
+.summary-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+}
+
+.summary-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+}
+
+.summary-card h3{
+
+    color:#666;
+
+    margin-bottom:10px;
+
+}
+
+.summary-card h2{
+
+    color:#1565C0;
+
+    font-size:28px;
+
+}
+
+/* Search Panel */
+
+.panel{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:25px;
+
+}
+
+.panel input,
+.panel select{
+
+    flex:1;
+
+    min-width:220px;
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    outline:none;
+
+}
+
+.panel input:focus,
+.panel select:focus{
+
+    border-color:#1565C0;
+
+}
+
+/* ==========================
+   Complaints Table
+========================== */
+
+.complaints-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    background:#fff;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
+
+}
+
+.complaints-table th{
+
+    background:#1565C0;
+
+    color:#fff;
+
+    padding:15px;
+
+    text-align:left;
+
+}
+
+.complaints-table td{
+
+    padding:14px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+.complaints-table tr:hover{
+
+    background:#f7f9fc;
+
+}
+
+/* Status */
+
+.open{
+
+    color:#F9A825;
+
+    font-weight:700;
+
+}
+
+.in-progress{
+
+    color:#1565C0;
+
+    font-weight:700;
+
+}
+
+.resolved{
+
+    color:#2E7D32;
+
+    font-weight:700;
+
+}
+
+/* Priority */
+
+.low{
+
+    color:#43A047;
+
+    font-weight:700;
+
+}
+
+.medium{
+
+    color:#FB8C00;
+
+    font-weight:700;
+
+}
+
+.high{
+
+    color:#E53935;
+
+    font-weight:700;
+
+}
+
+.emergency{
+
+    color:#B71C1C;
+
+    font-weight:700;
+
+}
+
+/* Modal */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.45);
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+}
+
+.modal-content{
+
+    background:#fff;
+
+    width:500px;
+
+    max-width:95%;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+
+}
+
+.modal-content h2{
+
+    color:#1565C0;
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.modal-content label{
+
+    display:block;
+
+    margin-top:15px;
+
+    margin-bottom:5px;
+
+    font-weight:600;
+
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    outline:none;
+
+    resize:vertical;
+
+}
+
+.modal-buttons{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+.modal-buttons button{
+
+    flex:1;
+
+    border:none;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+#saveComplaint{
+
+    background:#2E7D32;
+
+    color:#fff;
+
+}
+
+#closeComplaintModal{
+
+    background:#C62828;
+
+    color:#fff;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.main-content{
+
+    margin-left:0;
+
+    padding:15px;
+
+}
+
+.topbar{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+}
+
+.summary-cards{
+
+    grid-template-columns:1fr;
+
+}
+
+.panel{
+
+    flex-direction:column;
+
+}
+
+.complaints-table{
+
+    font-size:13px;
+
+}
+
+.modal-content{
+
+    width:95%;
+
+}
+
+}
