@@ -1,146 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AKR AMS - Resident Dashboard</title>
+<title>Resident Dashboard | AKR AMS</title>
 
 <link rel="stylesheet" href="css/dashboard.css">
 
-<style>
-body{
-    margin:0;
-    background:#f5f7fb;
-    font-family:Arial,sans-serif;
-}
-
-.header{
-    background:#1565c0;
-    color:#fff;
-    text-align:center;
-    padding:25px;
-}
-
-.header h1{
-    margin:0;
-}
-
-.header p{
-    margin-top:10px;
-    opacity:.9;
-}
-
-.container{
-    padding:18px;
-}
-
-.card{
-    background:#fff;
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 6px 18px rgba(0,0,0,.12);
-    transition:.3s;
-}
-
-.card:hover{
-    transform:scale(1.02);
-}
-
-.card h2{
-    margin:0;
-    color:#1565c0;
-}
-
-.card p{
-    color:#555;
-    margin-top:10px;
-}
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:#1565c0;
-    display:flex;
-    justify-content:space-around;
-    padding:12px 0;
-}
-
-.bottom-nav a{
-    color:white;
-    text-decoration:none;
-    text-align:center;
-    font-size:13px;
-    font-weight:bold;
-}
-
-body{
-    padding-bottom:80px;
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-<div class="header">
+<header class="topbar">
 
-<h1>🏢 AKR House Apartment</h1>
+<div class="logo-area">
 
-<p>Welcome, Resident</p>
+<img src="assets/images/logopng.png" class="logo">
+
+<div>
+
+<h2>AKR House Apartments</h2>
+
+<p>Resident Dashboard</p>
+
+</div>
 
 </div>
 
-<div class="container">
+<div class="notification">🔔</div>
 
-<div class="card">
-<h2>🏠 My Flat</h2>
-<p>Flat No : 101</p>
-</div>
+</header>
 
-<div class="card">
-<h2>💰 Maintenance</h2>
-<p>Paid : ₹0</p>
-</div>
+<section class="welcome">
 
-<div class="card">
-<h2>🔧 Complaints</h2>
-<p>No complaints</p>
-</div>
+<h2>Welcome, Resident 👋</h2>
 
-<div class="card">
-<h2>🚶 Visitors</h2>
-<p>No visitors today</p>
-</div>
+<p>Flat Number : <strong>--</strong></p>
 
-<div class="card">
-<h2>📢 Notices</h2>
-<p>No new notices</p>
-</div>
+</section>
 
-<div class="card">
-<h2>👤 Profile</h2>
-<p>View Profile</p>
-</div>
+<section class="dashboard">
 
-</div>
+<a href="profile.html" class="card">
+<h3>👤 Profile</h3>
+<p>View your profile</p>
+</a>
+
+<a href="maintenance.html" class="card">
+<h3>💰 Maintenance</h3>
+<p>Check dues & payments</p>
+</a>
+
+<a href="complaints.html" class="card">
+<h3>🔧 Complaints</h3>
+<p>Raise a complaint</p>
+</a>
+
+<a href="visitors.html" class="card">
+<h3>🚶 Visitors</h3>
+<p>Manage visitors</p>
+</a>
+
+<a href="notices.html" class="card">
+<h3>📢 Notices</h3>
+<p>Apartment announcements</p>
+</a>
+
+<a href="rules.html" class="card">
+<h3>📖 Rules</h3>
+<p>Community rules</p>
+</a>
+
+<a href="emergency.html" class="card">
+<h3>📞 Emergency</h3>
+<p>Emergency contacts</p>
+</a>
+
+<a href="index.html" class="card">
+<h3>🚪 Logout</h3>
+<p>Exit safely</p>
+</a>
+
+</section>
 
 <nav class="bottom-nav">
 
 <a href="resident.html">🏠<br>Home</a>
 
+<a href="maintenance.html">💰<br>Due</a>
+
 <a href="complaints.html">🔧<br>Complaint</a>
-
-<a href="visitors.html">🚶<br>Visitors</a>
-
-<a href="maintenance.html">💰<br>Maintenance</a>
 
 <a href="profile.html">👤<br>Profile</a>
 
 </nav>
+
+<script src="js/resident.js"></script>
 
 </body>
 </html>
