@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Visitor Management | AKR AMS</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+<div class="logo-area">
+
+<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
+
+<div>
+
+<h2>Visitor Management</h2>
+
+<p>AKR House Apartments</p>
+
+</div>
+
+</div>
+
+<div>🚶</div>
+
+</header>
+
+<section class="welcome">
+
+<h2>Register Visitor</h2>
+
+<p>Add visitor details before arrival.</p>
+
+</section>
+
+<section class="dashboard">
+
+<form id="visitorForm" class="card">
+
+<input
+type="text"
+id="visitorName"
+placeholder="Visitor Name"
+required>
+
+<br><br>
+
+<input
+type="tel"
+id="visitorPhone"
+placeholder="Mobile Number"
+maxlength="10"
+required>
+
+<br><br>
+
+<input
+type="text"
+id="vehicle"
+placeholder="Vehicle Number (Optional)">
+
+<br><br>
+
+<select id="purpose" required>
+
+<option value="">Purpose of Visit</option>
+
+<option>Family</option>
+<option>Guest</option>
+<option>Delivery</option>
+<option>Maid</option>
+<option>Cook</option>
+<option>Driver</option>
+<option>Electrician</option>
+<option>Plumber</option>
+<option>Others</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">
+
+Register Visitor
+
+</button>
+
+</form>
+
+<div class="card">
+
+<h3>Today's Visitors</h3>
+
+<p id="visitorCount">0</p>
+
+</div>
+
+</section>
+
+<nav class="bottom-nav">
+
+<a href="resident.html">🏠<br>Home</a>
+
+<a href="maintenance.html">💰<br>Maintenance</a>
+
+<a href="complaints.html">🔧<br>Complaint</a>
+
+<a href="profile.html">👤<br>Profile</a>
+
+</nav>
+
+<script src="js/visitors.js"></script>
+
+</body>
+
+</html>
