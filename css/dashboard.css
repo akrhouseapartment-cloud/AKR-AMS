@@ -1,121 +1,107 @@
-/* ===========================
-   AKR AMS Dashboard CSS
-   =========================== */
+/* ==========================================
+   AKR House Apartment Management System
+   dashboard.css
+========================================== */
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
     background:#f4f7fc;
-    color:#333;
+    color:#222;
     padding-bottom:90px;
 }
 
-/* Header */
+/* ---------- Top Bar ---------- */
 
-.header{
+.topbar{
     background:#1565C0;
     color:#fff;
-    text-align:center;
-    padding:30px 20px;
-    border-bottom-left-radius:25px;
-    border-bottom-right-radius:25px;
-    box-shadow:0 4px 12px rgba(0,0,0,.2);
-}
-
-.header h1{
-    font-size:30px;
-    margin-bottom:10px;
-}
-
-.header p{
-    font-size:18px;
-    opacity:.9;
-}
-
-/* Dashboard */
-
-.container{
     padding:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
 
-/* Cards */
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
 
-.card{
+.logo{
+    width:65px;
+    height:65px;
+    border-radius:50%;
     background:#fff;
-    border-radius:18px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 6px 18px rgba(0,0,0,.08);
-    transition:.3s;
+    padding:5px;
+}
+
+.notification{
+    font-size:28px;
     cursor:pointer;
 }
 
-.card:hover{
-    transform:translateY(-5px);
-}
+/* ---------- Welcome ---------- */
 
-.card h2{
-    color:#1565C0;
-    margin-bottom:10px;
-    font-size:26px;
-}
-
-.card p{
-    font-size:18px;
-    color:#555;
-}
-
-/* Statistics */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.stat-box{
-    background:white;
+.welcome{
+    margin:20px;
+    background:#fff;
+    padding:20px;
     border-radius:18px;
-    text-align:center;
-    padding:18px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
 }
 
-.stat-box h3{
-    font-size:28px;
+.welcome h2{
     color:#1565C0;
+    margin-bottom:8px;
 }
 
-.stat-box span{
+.welcome p{
     color:#666;
 }
 
-/* Buttons */
+/* ---------- Dashboard Cards ---------- */
 
-.button{
-    display:block;
-    width:100%;
-    background:#1565C0;
-    color:white;
-    text-align:center;
-    padding:15px;
-    border-radius:12px;
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:18px;
+    padding:20px;
+}
+
+.card{
+    background:#fff;
     text-decoration:none;
-    font-weight:bold;
-    margin-top:15px;
+    color:#222;
+    border-radius:18px;
+    padding:22px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
 }
 
-.button:hover{
-    background:#0D47A1;
+.card:hover{
+    transform:translateY(-6px);
 }
 
-/* Bottom Navigation */
+.card h3{
+    color:#1565C0;
+    margin-bottom:10px;
+    font-size:20px;
+}
+
+.card p{
+    color:#666;
+    font-size:14px;
+}
+
+/* ---------- Bottom Navigation ---------- */
 
 .bottom-nav{
     position:fixed;
@@ -125,86 +111,41 @@ body{
     background:#1565C0;
     display:flex;
     justify-content:space-around;
-    align-items:center;
     padding:12px 0;
-    box-shadow:0 -4px 10px rgba(0,0,0,.2);
+    box-shadow:0 -4px 12px rgba(0,0,0,.15);
 }
 
 .bottom-nav a{
-    color:white;
+    color:#fff;
     text-decoration:none;
-    font-size:13px;
-    font-weight:bold;
     text-align:center;
+    font-size:14px;
+    font-weight:500;
 }
 
 .bottom-nav a:hover{
-    color:#FFD54F;
+    color:#BBDEFB;
 }
 
-/* Badge */
-
-.badge{
-    background:red;
-    color:white;
-    border-radius:50%;
-    padding:4px 8px;
-    font-size:11px;
-}
-
-/* Tables */
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    background:#1565C0;
-    color:white;
-    padding:12px;
-}
-
-td{
-    padding:12px;
-    border-bottom:1px solid #ddd;
-}
-
-/* Inputs */
-
-input,
-select,
-textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    margin-top:10px;
-    margin-bottom:15px;
-}
-
-/* Mobile */
+/* ---------- Mobile ---------- */
 
 @media(max-width:600px){
 
-.header h1{
-font-size:26px;
+.logo{
+    width:55px;
+    height:55px;
 }
 
-.card h2{
-font-size:22px;
+.topbar h2{
+    font-size:18px;
 }
 
-.card p{
-font-size:16px;
+.dashboard{
+    grid-template-columns:1fr;
 }
 
-.stat-box h3{
-font-size:24px;
+.card{
+    padding:20px;
 }
 
-}
-.card p{
-    margin:0;
-    color:#555;
 }
