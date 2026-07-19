@@ -1,168 +1,450 @@
-/* ==========================================
-   AKR AMS
-   Dashboard
-========================================== */
+// =====================================
+// AKR AMS Dashboard
+// =====================================
 
-import { auth, db } from "./firebase.js";
+import {
+    db
+} from "./firebase.js";
+
+import {
+    collection,
+    getDocs,
+    query,
+    where,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+const TOTAL_FLATS = 30;
+
+async function loadDashboard() {
+
+    try {
+
+        const residentsSnapshot = await getDocs(
+            collection(db, "residents")
+        );
+
+        let totalResidents = 0;
+        let occupied = 0;
+        let pending = 0;
+
+        const tbody = document.getElementById("pendingResidents");
+
+        if (tbody) {
+            tbody.innerHTML = "";
+        }
+
+        residentsSnapshot.forEach((docSnap) => {
+
+            const resident = docSnap.data();
+
+            totalResidents++;
+
+            if (resident.status === "Approved") {
+                occupied++;
+            }
+
+            if (resident.status === "Pending") {
+
+                pending++;
+
+                if (tbody) {
+
+                    tbody.innerHTML += `
+<tr>
+
+<td>${resident.fullName}</td>
+
+<td>${resident.flat}</td>
+
+<td>${resident.mobile}</td>
+
+<td>
+
+<button
+class="approve"
+onclick="approveResident('${docSnap.id}')">
+
+Approve
+
+</button>
+
+<button
+class="reject"
+onclick="rejectResident('${docSnap.id}')">
+
+Reject
+
+</button>
+
+</td>
+
+</tr>
+`;
+
+                }
+
+            }
+
+        });
+
+        if (tbody && pending === 0) {
+
+            tbody.innerHTML =
+                `<tr>
+<td colspan="4">
+No Pending Approvals
+</td>
+</tr>`;
+
+        }
+
+        document.getElementById("residentCount").textContent = totalResidents;
+        document.getElementById("occupiedCount").textContent = occupied;
+        document.getElementById("vacantCount").textContent = TOTAL_FLATS - occupied;
+        document.getElementById("pendingCount").textContent = pending;
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+loadDashboard();
+
+      // =====================================
+// Approve / Reject Residents
+// =====================================
+
+import {
+    updateDoc,
+    addDoc
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+// Make functions available to HTML buttons
+window.approveResident = approveResident;
+window.rejectResident = rejectResident;
+
+async function approveResident(docId) {
+
+    try {
+
+        await updateDoc(doc(db, "residents", docId), {
+            status: "Approved"
+        });
+
+        await addActivity("Resident approved");
+
+        alert("Resident approved successfully.");
+
+        loadDashboard();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to approve resident.");
+
+    }
+
+}
+
+async function rejectResident(docId) {
+
+    try {
+
+        await updateDoc(doc(db, "residents", docId), {
+            status: "Rejected"
+        });
+
+        await addActivity("Resident rejected");
+
+        alert("Resident rejected successfully.");
+
+        loadDashboard();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to reject resident.");
+
+    }
+
+}
+
+// =====================================
+// Latest Notices
+// =====================================
+
+async function loadNotices() {
+
+    const noticeBox = document.getElementById("latestNotices");
+
+    if (!noticeBox) return;
+
+    noticeBox.innerHTML = "";
+
+    try {
+
+        const noticeSnapshot = await getDocs(
+            collection(db, "notices")
+        );
+
+        if (noticeSnapshot.empty) {
+
+            noticeBox.innerHTML =
+                "<p>No notices available.</p>";
+
+            return;
+
+        }
+
+        noticeSnapshot.forEach((notice) => {
+
+            const data = notice.data();
+
+            noticeBox.innerHTML += `
+                <p>
+                    <strong>${data.title}</strong><br>
+                    ${data.message}
+                </p>
+                <hr>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+// =====================================
+// Recent Activities
+// =====================================
+
+async function addActivity(message) {
+
+    try {
+
+        await addDoc(collection(db, "activities"), {
+
+            activity: message,
+
+            createdAt: new Date()
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+async function loadActivities() {
+
+    const list = document.getElementById("recentActivities");
+
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    try {
+
+        const activitySnapshot = await getDocs(
+            collection(db, "activities")
+        );
+
+        if (activitySnapshot.empty) {
+
+            list.innerHTML =
+                "<li>No recent activities.</li>";
+
+            return;
+
+        }
+
+        activitySnapshot.forEach((activity) => {
+
+            const data = activity.data();
+
+            list.innerHTML += `
+                <li>${data.activity}</li>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+// Load dashboard extras
+loadNotices();
+loadActivities();
+
+// =====================================
+// Admin Profile
+// =====================================
+
+async function loadAdminProfile() {
+
+    try {
+
+        const adminRef = doc(db, "admins", "superadmin");
+
+        const adminSnap = await getDoc(adminRef);
+
+        if (adminSnap.exists()) {
+
+            const admin = adminSnap.data();
+
+            const adminName = document.getElementById("adminName");
+
+            if (adminName) {
+                adminName.textContent = admin.name;
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error("Admin Profile Error:", error);
+
+    }
+
+}
+
+// =====================================
+// Complaint Count
+// =====================================
+
+async function loadComplaintCount() {
+
+    try {
+
+        const snapshot = await getDocs(
+            collection(db, "complaints")
+        );
+
+        const element = document.getElementById("complaintCount");
+
+        if (element) {
+            element.textContent = snapshot.size;
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+// =====================================
+// Visitor Count
+// =====================================
+
+async function loadVisitorCount() {
+
+    try {
+
+        const snapshot = await getDocs(
+            collection(db, "visitors")
+        );
+
+        const element = document.getElementById("visitorCount");
+
+        if (element) {
+            element.textContent = snapshot.size;
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+// =====================================
+// Refresh Dashboard
+// =====================================
+
+async function refreshDashboard() {
+
+    await loadDashboard();
+
+    await loadAdminProfile();
+
+    await loadComplaintCount();
+
+    await loadVisitorCount();
+
+    await loadNotices();
+
+    await loadActivities();
+
+}
+
+refreshDashboard();
+
+// Auto refresh every 30 seconds
+setInterval(refreshDashboard, 30000);
+
+// =====================================
+// Firebase Logout
+// =====================================
+
+import {
+    auth
+} from "./firebase.js";
 
 import {
     signOut
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-import {
-    collection,
-    getDocs,
-    doc,
-    updateDoc,
-    deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-const residentCount = document.getElementById("residentCount");
-const occupiedCount = document.getElementById("occupiedCount");
-const vacantCount = document.getElementById("vacantCount");
-const pendingCount = document.getElementById("pendingCount");
-
-const pendingResidents = document.getElementById("pendingResidents");
-
-const adminName = document.getElementById("adminName");
-
 const logoutBtn = document.getElementById("logoutBtn");
 
-const admin = JSON.parse(localStorage.getItem("akrAdmin"));
+if (logoutBtn) {
 
-if(admin){
-    adminName.textContent = admin.name;
-}
+    logoutBtn.addEventListener("click", async (e) => {
 
-loadDashboard();
+        e.preventDefault();
 
-logoutBtn.addEventListener("click",logout);
+        const confirmLogout = confirm("Are you sure you want to logout?");
 
-async function logout(){
+        if (!confirmLogout) return;
 
-    await signOut(auth);
+        try {
 
-    localStorage.removeItem("akrAdmin");
+            await signOut(auth);
 
-    window.location.href="admin-login.html";
+            localStorage.clear();
 
-}
+            window.location.href = "login.html";
 
-async function loadDashboard(){
+        } catch (error) {
 
-    pendingResidents.innerHTML="";
+            alert("Logout failed.");
 
-    let totalResidents=0;
-    let occupied=0;
-    let vacant=0;
-    let pending=0;
-
-    // Residents
-
-    const residents=await getDocs(collection(db,"residents"));
-
-    residents.forEach((residentDoc)=>{
-
-        totalResidents++;
-
-        const resident=residentDoc.data();
-
-        if(resident.status==="Pending"){
-
-            pending++;
-
-            pendingResidents.innerHTML+=`
-
-            <tr>
-
-            <td>${resident.fullName}</td>
-
-            <td>${resident.flat}</td>
-
-            <td>${resident.mobile}</td>
-
-            <td>${resident.status}</td>
-
-            <td>
-
-            <button
-            class="approveBtn"
-            onclick="approveResident('${residentDoc.id}')">
-
-            Approve
-
-            </button>
-
-            <button
-            class="rejectBtn"
-            onclick="rejectResident('${residentDoc.id}')">
-
-            Reject
-
-            </button>
-
-            </td>
-
-            </tr>
-
-            `;
+            console.error(error);
 
         }
 
     });
 
-    residentCount.textContent=totalResidents;
-
-    pendingCount.textContent=pending;
-
-    // Flats
-
-    const flats=await getDocs(collection(db,"flats"));
-
-    flats.forEach((flatDoc)=>{
-
-        const flat=flatDoc.data();
-
-        if(flat.status==="Vacant"){
-
-            vacant++;
-
-        }else{
-
-            occupied++;
-
-        }
-
-    });
-
-    occupiedCount.textContent=occupied;
-
-    vacantCount.textContent=vacant;
-
 }
 
-window.approveResident=async function(id){
 
-    await updateDoc(doc(db,"residents",id),{
-
-        status:"Approved"
-
-    });
-
-    alert("Resident Approved");
-
-    loadDashboard();
-
-}
-
-window.rejectResident=async function(id){
-
-    if(!confirm("Reject resident?")) return;
-
-    await deleteDoc(doc(db,"residents",id));
-
-    alert("Resident Rejected");
-
-    loadDashboard();
-
-}
