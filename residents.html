@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,8 +8,8 @@
 
 <title>Residents | AKR AMS</title>
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/residents.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/residents.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -16,39 +17,166 @@
 
 <body>
 
-<header class="header">
+<div class="container">
 
-<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../assets/images/logopng.png"
+class="logo"
+alt="AKR Logo">
+
+<h2>AKR AMS</h2>
+
+<p>Admin Panel</p>
+
+</div>
+
+<ul class="menu">
+
+<li>
+<a href="../admin.html">🏠 Dashboard</a>
+</li>
+
+<li class="active">
+<a href="residents.html">👥 Residents</a>
+</li>
+
+<li>
+<a href="flats.html">🏢 Flats</a>
+</li>
+
+<li>
+<a href="maintenance.html">💰 Maintenance</a>
+</li>
+
+<li>
+<a href="payments.html">💳 Payments</a>
+</li>
+
+<li>
+<a href="complaints.html">📋 Complaints</a>
+</li>
+
+<li>
+<a href="visitors.html">🚶 Visitors</a>
+</li>
+
+<li>
+<a href="notices.html">📢 Notices</a>
+</li>
+
+<li>
+<a href="reports.html">📊 Reports</a>
+</li>
+
+<li>
+<a href="settings.html">⚙️ Settings</a>
+</li>
+
+<li>
+<a href="../login.html" id="logoutBtn">🚪 Logout</a>
+</li>
+
+</ul>
+
+</aside>
+
+<!-- Main Content -->
+
+<main class="main-content">
+
+<header class="topbar">
 
 <div>
-<h2>Residents Directory</h2>
-<p>AKR House Apartments</p>
+
+<h1>Residents Management</h1>
+
+<p>Manage apartment residents</p>
+
 </div>
+
+<button id="addResidentBtn" class="primary-btn">
+
++ Add Resident
+
+</button>
 
 </header>
 
-<section class="panel">
+<!-- Statistics -->
 
-<input
-type="text"
-id="searchResident"
-placeholder="🔍 Search by Name or Flat">
+<section class="stats">
 
-<button id="addResidentBtn">+ Add Resident</button>
+<div class="stat-card">
+
+<h3>Total Residents</h3>
+
+<h2 id="totalResidents">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Approved</h3>
+
+<h2 id="approvedResidents">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Pending</h3>
+
+<h2 id="pendingResidents">0</h2>
+
+</div>
+
+<div class="stat-card">
+
+<h3>Rejected</h3>
+
+<h2 id="rejectedResidents">0</h2>
+
+</div>
 
 </section>
 
-<table class="resident-table">
+<!-- Search -->
+
+<section class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search by Name, Flat or Mobile">
+
+</section>
+
+<!-- Residents Table -->
+
+<section class="table-card">
+
+<table class="table">
 
 <thead>
 
 <tr>
 
-<th>Flat</th>
 <th>Name</th>
+
+<th>Flat</th>
+
 <th>Mobile</th>
+
+<th>Email</th>
+
 <th>Status</th>
-<th>Action</th>
+
+<th>Actions</th>
 
 </tr>
 
@@ -56,11 +184,152 @@ placeholder="🔍 Search by Name or Flat">
 
 <tbody id="residentTableBody">
 
+<tr>
+
+<td colspan="6">
+
+Loading residents...
+
+</td>
+
+</tr>
+
 </tbody>
 
 </table>
 
-<script src="js/residents.js"></script>
+</section>
+
+  <!-- ===========================
+     Add / Edit Resident Modal
+=========================== -->
+
+<div id="residentModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" id="closeModal">&times;</span>
+
+        <h2 id="modalTitle">Add Resident</h2>
+
+        <form id="residentForm">
+
+            <input type="hidden" id="residentId">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="fullName"
+                    placeholder="Enter Full Name"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Flat Number</label>
+
+                <input
+                    type="text"
+                    id="flat"
+                    placeholder="Example: 301"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Mobile Number</label>
+
+                <input
+                    type="tel"
+                    id="mobile"
+                    placeholder="10 Digit Mobile Number"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="example@email.com"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Status</label>
+
+                <select id="status">
+
+                    <option value="Pending">Pending</option>
+
+                    <option value="Approved">Approved</option>
+
+                    <option value="Rejected">Rejected</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-buttons">
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Save Resident
+
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelBtn">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ===========================
+     Footer
+=========================== -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 AKR House Apartment Management System
+    </p>
+
+</footer>
+
+</main>
+
+</div>
+
+<!-- ===========================
+     JavaScript
+=========================== -->
+
+<script type="module" src="../js/residents.js"></script>
 
 </body>
+
 </html>
+
