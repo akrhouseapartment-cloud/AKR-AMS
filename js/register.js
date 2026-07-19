@@ -1,19 +1,27 @@
-import {
-  auth,
-  db,
-  collection,
-  addDoc
-} from "./firebase.js";
+/* ==========================================
+   AKR AMS
+   Firebase Resident Registration
+========================================== */
+
+import { auth, db } from "./firebase.js";
 
 import {
-  createUserWithEmailAndPassword
+    createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 const form = document.getElementById("registerForm");
 
-form.addEventListener("submit", registerResident);
+if (form) {
+    form.addEventListener("submit", registerResident);
+}
 
-async function registerResident(e){
+async function registerResident(e) {
 
     e.preventDefault();
 
@@ -23,7 +31,22 @@ async function registerResident(e){
     const password = document.getElementById("password").value;
     const flat = document.getElementById("flat").value;
 
-    try{
+    if (fullName === "") {
+        alert("Enter your full name.");
+        return;
+    }
+
+    if (mobile.length !== 10) {
+        alert("Enter a valid mobile number.");
+        return;
+    }
+
+    if (flat === "") {
+        alert("Select your flat.");
+        return;
+    }
+
+    try {
 
         const userCredential =
             await createUserWithEmailAndPassword(
@@ -32,31 +55,39 @@ async function registerResident(e){
                 password
             );
 
-        await addDoc(
-            collection(db,"residents"),
-            {
-                uid:userCredential.user.uid,
-                fullName,
-                mobile,
-                email,
-                flat,
-                role:"resident",
-                status:"Pending",
-                createdAt:new Date()
-            }
-        );
+        await addDoc(collection(db, "residents"), {
+
+            uid: userCredential.user.uid,
+
+            fullName: fullName,
+
+            mobile: mobile,
+
+            email: email,
+
+            flat: flat,
+
+            role: "Resident",
+
+            status: "Pending",
+
+            createdAt: serverTimestamp()
+
+        });
 
         alert(
-            "Registration successful. Please wait for admin approval."
+            "Registration completed successfully.\n\nYour account is waiting for Admin approval."
         );
 
         form.reset();
 
-        window.location.href="login.html";
+        window.location.href = "login.html";
 
-    }catch(error){
+    } catch (error) {
 
         alert(error.message);
+
+        console.error(error);
 
     }
 
