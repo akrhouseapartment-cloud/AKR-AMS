@@ -12,44 +12,74 @@ import {
 
 import {
     collection,
-    getDocs,
     query,
-    where
+    where,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-const form = document.getElementById("loginForm");
+const loginForm = document.getElementById("loginForm");
 
-form.addEventListener("submit", loginResident);
+loginForm.addEventListener("submit", loginUser);
 
-async function loginResident(e){
+async function loginUser(e){
 
     e.preventDefault();
 
-    const email =
-        document.getElementById("email").value.trim();
-
-    const password =
-        document.getElementById("password").value;
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
     try{
 
-        const user =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-
-        const q=query(
-            collection(db,"residents"),
-            where("uid","==",user.user.uid)
+        const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
         );
 
-        const snapshot=await getDocs(q);
+        const uid = userCredential.user.uid;
 
-        if(snapshot.empty){
+        /* ===============================
+           Check Admin
+        =============================== */
 
-            alert("Resident record not found.");
+        const adminQuery = query(
+            collection(db,"admins"),
+            where("uid","==",uid)
+        );
+
+        const adminSnapshot = await getDocs(adminQuery);
+
+        if(!adminSnapshot.empty){
+
+            const admin = adminSnapshot.docs[0].data();
+
+            localStorage.setItem(
+                "akrAdmin",
+                JSON.stringify(admin)
+            );
+
+            window.location.href="admin.html";
+
+            return;
+
+        }
+
+        /* ===============================
+           Check Resident
+        =============================== */
+
+        const residentQuery = query(
+            collection(db,"residents"),
+            where("uid","==",uid)
+        );
+
+        const residentSnapshot = await getDocs(
+            residentQuery
+        );
+
+        if(residentSnapshot.empty){
+
+            alert("User record not found.");
 
             await signOut(auth);
 
@@ -57,12 +87,25 @@ async function loginResident(e){
 
         }
 
-        const resident=snapshot.docs[0].data();
+        const resident =
+            residentSnapshot.docs[0].data();
 
-        if(resident.status!=="Approved"){
+        if(resident.status==="Pending"){
 
             alert(
                 "Your account is waiting for Admin approval."
+            );
+
+            await signOut(auth);
+
+            return;
+
+        }
+
+        if(resident.status==="Rejected"){
+
+            alert(
+                "Your registration has been rejected."
             );
 
             await signOut(auth);
@@ -82,7 +125,32 @@ async function loginResident(e){
 
     catch(error){
 
-        alert(error.message);
+        switch(error.code){
+
+            case "auth/invalid-email":
+                alert("Invalid email address.");
+                break;
+
+            case "auth/user-not-found":
+                alert("Account not found.");
+                break;
+
+            case "auth/wrong-password":
+                alert("Incorrect password.");
+                break;
+
+            case "auth/invalid-credential":
+                alert("Incorrect email or password.");
+                break;
+
+            case "auth/too-many-requests":
+                alert("Too many attempts. Try again later.");
+                break;
+
+            default:
+                alert(error.message);
+
+        }
 
     }
 
