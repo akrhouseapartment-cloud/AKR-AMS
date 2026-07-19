@@ -1,140 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+/* ==========================================
+   AKR AMS
+   Firebase Resident Registration
+========================================== */
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+import { auth, db } from "./firebase.js";
 
-<title>Resident Registration | AKR House Apartments</title>
+import {
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-<link rel="stylesheet" href="css/style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-</head>
-
-<body>
-
-<div class="login-container">
-
-<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
-
-<h2>Resident Registration</h2>
-
-<p>Create your AKR AMS account</p>
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 const form = document.getElementById("registerForm");
 
-<input
-type="text"
-id="fullname"
-placeholder="Full Name"
-required>
+if (form) {
+    form.addEventListener("submit", registerResident);
+}
 
-<input
-type="tel"
-id="mobile"
-placeholder="Mobile Number"
-maxlength="10"
-required>
+async function registerResident(e) {
 
-<input
-type="email"
-id="email"
-placeholder="Email Address"
-required>
+    e.preventDefault();
 
-<select id="flat" required>
+    const fullName = document.getElementById("fullName").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const flat = document.getElementById("flat").value;
 
-<option value="">Select Flat Number</option>
+    if (fullName === "") {
+        alert("Enter your full name.");
+        return;
+    }
 
-<option>001</option>
-<option>002</option>
-<option>003</option>
+    if (mobile.length !== 10) {
+        alert("Enter a valid mobile number.");
+        return;
+    }
 
-<option>101</option>
-<option>102</option>
-<option>103</option>
-<option>104</option>
-<option>105</option>
+    if (flat === "") {
+        alert("Select your flat.");
+        return;
+    }
 
-<option>201</option>
-<option>202</option>
-<option>203</option>
-<option>204</option>
-<option>205</option>
+    try {
 
-<option>301</option>
-<option>302</option>
-<option>303</option>
-<option>304</option>
-<option>305</option>
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-<option>401</option>
-<option>402</option>
-<option>403</option>
-<option>404</option>
-<option>405</option>
-<option>406</option>
+        await addDoc(collection(db, "residents"), {
 
-<option>501</option>
-<option>502</option>
-<option>503</option>
-<option>504</option>
-<option>505</option>
-<option>506</option>
+            uid: userCredential.user.uid,
 
-</select>
+            fullName: fullName,
 
-<select id="residentType" required>
+            mobile: mobile,
 
-<option value="">Resident Type</option>
+            email: email,
 
-<option>Owner</option>
+            flat: flat,
 
-<option>Tenant</option>
+            role: "Resident",
 
-</select>
+            status: "Pending",
 
-<input
-type="password"
-id="password"
-placeholder="Create Password"
-required>
+            createdAt: serverTimestamp()
 
-<input
-type="password"
-id="confirmPassword"
-placeholder="Confirm Password"
-required>
+        });
 
-<button type="submit">
+        alert(
+            "Registration completed successfully.\n\nYour account is waiting for Admin approval."
+        );
 
-Register
+        form.reset();
 
-</button>
+        window.location.href = "login.html";
 
-</form>
+    } catch (error) {
 
-<br>
+        alert(error.message);
 
-<a href="login.html">
+        console.error(error);
 
-Already have an account? Login
+    }
 
-</a>
-
-<br><br>
-
-<a href="index.html">
-
-← Back to Home
-
-</a>
-
-</div>
-
-<script type="module" src="js/register.js"></script>
-
-</body>
-</html>
+}
