@@ -1,40 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKR AMS - Resident Registration</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/style.css">
+<title>Resident Registration | AKR AMS</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+.form-container{
+    width:90%;
+    max-width:500px;
+    margin:30px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.form-container h2{
+    text-align:center;
+    color:#1565C0;
+    margin-bottom:20px;
+}
+
+.btn-register{
+    width:100%;
+    padding:15px;
+    background:#1565C0;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.btn-register:hover{
+    background:#0D47A1;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    text-decoration:none;
+    color:#1565C0;
+    font-weight:bold;
+}
+</style>
+
 </head>
 
 <body>
 
-<div class="container">
+<header>
+<h1>🏢 AKR House Apartment</h1>
+<p>Resident Registration</p>
+</header>
 
-<h1>🏢 AKR AMS</h1>
+<div class="form-container">
 
-<h2>Resident Registration</h2>
+<h2>Create Account</h2>
 
-<input type="text" placeholder="Full Name">
+<form id="registerForm">
 
-<input type="text" placeholder="Mobile Number">
+<label>Full Name</label>
+<input type="text" id="name" required>
 
-<input type="email" placeholder="Email">
+<label>Mobile Number</label>
+<input type="tel" id="mobile" maxlength="10" required>
 
-<select>
-<option>Select Flat</option>
+<label>Email</label>
+<input type="email" id="email">
+
+<label>Flat Number</label>
+<select id="flat" required>
+
+<option value="">Select Flat</option>
+
 <option>001</option>
 <option>002</option>
 <option>003</option>
+
 <option>101</option>
 <option>102</option>
 <option>103</option>
 <option>104</option>
 <option>105</option>
+
 <option>201</option>
 <option>202</option>
+<option>203</option>
+<option>204</option>
+<option>205</option>
+
+<option>301</option>
+<option>302</option>
+<option>303</option>
+<option>304</option>
+<option>305</option>
+
+<option>401</option>
+<option>402</option>
+<option>403</option>
+<option>404</option>
+<option>405</option>
+<option>406</option>
+
+<option>501</option>
+<option>502</option>
+<option>503</option>
+<option>504</option>
+<option>505</option>
+<option>506</option>
+
+</select>
+
+<label>Number of Family Members</label>
+<input type="number" id="family" min="1" value="1">
+
+<label>Password</label>
+<input type="password" id="password" required>
+
+<label>Confirm Password</label>
+<input type="password" id="confirm" required>
+
+<button type="submit" class="btn-register">
+Register
+</button>
+
+</form>
+
+<a href="login.html" class="back">
+⬅ Already have an account? Login
+</a>
+
+</div>
+
+<script>
+
+document.getElementById("registerForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let password=document.getElementById("password").value;
+let confirm=document.getElementById("confirm").value;
+let mobile=document.getElementById("mobile").value;
+
+if(mobile.length!=10){
+alert("Please enter a valid mobile number.");
+return;
+}
+
+if(password!=confirm){
+alert("Passwords do not match.");
+return;
+}
+
+alert("Registration submitted successfully.\n\nWaiting for Admin Approval.");
+
+window.location.href="login.html";
+
+});
+
+</script>
+
+</body>
+</html><header>
+<h1>🏢 AKR House Apartment</h1>
+<p>Resident Registration</p>
+</header>
+
+<div class="form-container">
+
+<h2>Create Account</h2>
+
+<form id="registerForm">
+
+<label>Full Name</label>
+<input type="text" id="name" required>
+
+<label>Mobile Number</label>
+<input type="tel" id="mobile" maxlength="10" required>
+
+<label>Email</label>
+<input type="email" id="email">
+
+<label>Flat Number</label>
+<select id="flat" required>
+
+<option value="">Select Flat</option>
+
+<option>001</option>
+<option>002</option>
+<option>003</option>
+
+<option>101</option>
+<option>102</option>
+<option>103</option>
+<option>104</option>
+<option>105</option>
+
+<option>201</option>
+<option>202</option>
+<option>203</option>
+<option>204</option>
+<option>205</option>
+
+<option>301</option>
+<option>302</option>
+<option>303</option>
+<option>304</option>
+<option>305</option>
+
+<option>401</option>
+<option>402</option>
+<option>403</option>
+<option>404</option>
+<option>405</option>
+<option>406</option>
+
+<option>501</option>
+<option>502</option>
+<option>503</option>
+<option>504</option>
+<option>505</option>
+<option>506</option>
+
+</select>
+
+<label>Number of Family Members</label>
+<input type="number" id="family" min="1" value="1">
+
+<label>Password</label>
+<input type="password" id="password" required>
+
+<label>Confirm Password</label>
+<input type="password" id="confirm" required>
+
+<button type="submit" class="btn-register">
+Register
+</button>
+
+</form>
+
+<a href="login.html" class="back">
+⬅ Already have an account? Login
+</a>
+
+</div>
+
+<script>
+
+document.getElementById("registerForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+let password=document.getElementById("password").value;
+let confirm=document.getElementById("confirm").value;
+let mobile=document.getElementById("mobile").value;
+
+if(mobile.length!=10){
+alert("Please enter a valid mobile number.");
+return;
+}
+
+if(password!=confirm){
+alert("Passwords do not match.");
+return;
+}
+
+alert("Registration submitted successfully.\n\nWaiting for Admin Approval.");
+
+window.location.href="login.html";
+
+});
+
+</script>
+
+</body>
+</html><option>202</option>
 <option>203</option>
 <option>204</option>
 <option>205</option>
