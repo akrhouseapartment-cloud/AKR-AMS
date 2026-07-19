@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Complaints | AKR AMS</title>
 
-<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/complaints.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -15,39 +18,177 @@
 
 <body>
 
+<div class="container">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../assets/images/logopng.png" class="logo">
+
+<h2>AKR AMS</h2>
+
+</div>
+
+<ul class="menu">
+
+<li><a href="../admin.html">🏠 Dashboard</a></li>
+
+<li><a href="residents.html">👥 Residents</a></li>
+
+<li><a href="flats.html">🏢 Flats</a></li>
+
+<li><a href="maintenance.html">💰 Maintenance</a></li>
+
+<li class="active"><a href="complaints.html">📋 Complaints</a></li>
+
+<li><a href="visitors.html">🚶 Visitors</a></li>
+
+<li><a href="notices.html">📢 Notices</a></li>
+
+<li><a href="../admin.html">🚪 Logout</a></li>
+
+</ul>
+
+</aside>
+
+<!-- Main Content -->
+
+<main class="main-content">
+
 <header class="topbar">
-
-<div class="logo-area">
-
-<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
 
 <div>
 
-<h2>Complaint Management</h2>
+<h1>Complaint Management</h1>
 
 <p>AKR House Apartments</p>
 
 </div>
 
-</div>
+<button id="addComplaintBtn">
+
++ New Complaint
+
+</button>
 
 </header>
 
-<section class="welcome">
+<section class="summary-cards">
 
-<h2>Raise a Complaint</h2>
+<div class="summary-card">
 
-<p>Submit your issue to the apartment administration.</p>
+<h3>Total</h3>
+
+<h2 id="totalComplaints">0</h2>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Open</h3>
+
+<h2 id="openComplaints">0</h2>
+
+</div>
+
+<div class="summary-card">
+
+<h3>In Progress</h3>
+
+<h2 id="progressComplaints">0</h2>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Resolved</h3>
+
+<h2 id="resolvedComplaints">0</h2>
+
+</div>
 
 </section>
 
-<section class="dashboard">
+<section class="panel">
 
-<form id="complaintForm" class="card">
+<input
+type="text"
+id="searchComplaint"
+placeholder="Search by Flat Number">
 
-<label>Complaint Category</label>
+<select id="statusFilter">
 
-<select id="category" required>
+<option value="">All Status</option>
+
+<option>Open</option>
+
+<option>In Progress</option>
+
+<option>Resolved</option>
+
+</select>
+
+</section>
+
+<table class="complaints-table">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Flat</th>
+
+<th>Resident</th>
+
+<th>Category</th>
+
+<th>Priority</th>
+
+<th>Status</th>
+
+<th>Date</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="complaintsTable">
+
+</tbody>
+
+</table>
+
+
+  <!-- Complaint Modal -->
+
+<div class="modal" id="complaintModal">
+
+<div class="modal-content">
+
+<h2>Complaint Details</h2>
+
+<label>Flat Number</label>
+
+<input
+type="text"
+id="complaintFlat">
+
+<label>Resident Name</label>
+
+<input
+type="text"
+id="complaintResident">
+
+<label>Category</label>
+
+<select id="complaintCategory">
 
 <option value="">Select Category</option>
 
@@ -55,80 +196,81 @@
 
 <option>Plumbing</option>
 
+<option>Lift</option>
+
 <option>Water Supply</option>
 
-<option>Lift</option>
+<option>Cleaning</option>
 
 <option>Parking</option>
 
 <option>Security</option>
 
-<option>Housekeeping</option>
-
-<option>Noise</option>
-
 <option>Others</option>
 
 </select>
 
-<br><br>
+<label>Priority</label>
 
-<label>Complaint Title</label>
+<select id="complaintPriority">
 
-<input
-type="text"
-id="title"
-placeholder="Enter complaint title"
-required>
+<option>Low</option>
 
-<br><br>
+<option>Medium</option>
+
+<option>High</option>
+
+<option>Emergency</option>
+
+</select>
 
 <label>Description</label>
 
 <textarea
-id="description"
-rows="5"
-placeholder="Describe the issue"
-required></textarea>
+id="complaintDescription"
+rows="4"
+placeholder="Enter complaint details..."></textarea>
 
-<br><br>
+<label>Status</label>
 
-<button type="submit">
+<select id="complaintStatus">
 
-Submit Complaint
+<option>Open</option>
+
+<option>In Progress</option>
+
+<option>Resolved</option>
+
+</select>
+
+<div class="modal-buttons">
+
+<button id="saveComplaint">
+
+💾 Save
 
 </button>
 
-</form>
+<button id="closeComplaintModal">
 
-<div class="card">
+❌ Close
 
-<h3>Complaint Status</h3>
-
-<p>Pending : 0</p>
-
-<p>In Progress : 0</p>
-
-<p>Resolved : 0</p>
+</button>
 
 </div>
 
-</section>
+</div>
 
-<nav class="bottom-nav">
+</div>
 
-<a href="resident.html">🏠<br>Home</a>
+<script type="module" src="../js/complaints.js"></script>
 
-<a href="maintenance.html">💰<br>Maintenance</a>
+</main>
 
-<a href="complaints.html">🔧<br>Complaint</a>
-
-<a href="profile.html">👤<br>Profile</a>
-
-</nav>
-
-<script src="js/complaints.js"></script>
+</div>
 
 </body>
 
 </html>
+
+  
