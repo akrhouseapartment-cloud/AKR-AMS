@@ -57,3 +57,73 @@ alert("Add Notice module coming soon.");
 });
 
 }
+
+
+// ----------------------------
+// Search & Filter Notices
+// ----------------------------
+
+const searchNotice =
+document.getElementById("searchNotice");
+
+const noticeFilter =
+document.getElementById("noticeFilter");
+
+function filterNotices(){
+
+    const keyword =
+    searchNotice.value.toLowerCase().trim();
+
+    const category =
+    noticeFilter.value;
+
+    const cards =
+    document.querySelectorAll(".card");
+
+    cards.forEach((card)=>{
+
+        const title =
+        card.querySelector("h3")
+        ?.textContent.toLowerCase() || "";
+
+        const content =
+        card.querySelector("p")
+        ?.textContent.toLowerCase() || "";
+
+        const priority =
+        card.dataset.priority || "normal";
+
+        const searchMatch =
+            title.includes(keyword) ||
+            content.includes(keyword);
+
+        const filterMatch =
+            category==="all" ||
+            priority===category;
+
+        card.style.display =
+            searchMatch && filterMatch
+            ? "block"
+            : "none";
+
+    });
+
+}
+
+if(searchNotice){
+
+    searchNotice.addEventListener(
+        "input",
+        filterNotices
+    );
+
+}
+
+if(noticeFilter){
+
+    noticeFilter.addEventListener(
+        "change",
+        filterNotices
+    );
+
+}
