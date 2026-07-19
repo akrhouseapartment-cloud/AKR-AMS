@@ -6,10 +6,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AKR House Apartment Management System</title>
+<title>AKR AMS | Admin Dashboard</title>
 
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/admin.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -19,290 +19,376 @@
 
 <div class="container">
 
-    <!-- Sidebar -->
+<!-- ===========================
+     Sidebar
+=========================== -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <div class="sidebar-header">
+<div class="sidebar-header">
 
-            <img src="assets/images/logopng.png" class="logo">
+<img src="assets/images/logopng.png"
+class="logo"
+alt="AKR Logo">
 
-            <h2>AKR AMS</h2>
+<h2>AKR AMS</h2>
 
-        </div>
-
-        <ul class="menu">
-
-            <li class="active">
-                <a href="admin.html">🏠 Dashboard</a>
-            </li>
-
-            <li>
-                <a href="pages/residents.html">👥 Residents</a>
-            </li>
-
-            <li>
-                <a href="pages/flats.html">🏢 Flats</a>
-            </li>
-
-            <li>
-                <a href="pages/maintenance.html">💰 Maintenance</a>
-            </li>
-
-            <li>
-                <a href="pages/payments.html">💳 Payments</a>
-            </li>
-
-            <li>
-                <a href="pages/complaints.html">📋 Complaints</a>
-            </li>
-
-            <li>
-                <a href="pages/visitors.html">🚶 Visitors</a>
-            </li>
-
-            <li>
-                <a href="pages/notices.html">📢 Notices</a>
-            </li>
-
-            <li>
-                <a href="pages/documents.html">📁 Documents</a>
-            </li>
-
-            <li>
-                <a href="pages/emergency.html">🚨 Emergency</a>
-            </li>
-
-            <li>
-                <a href="pages/reports.html">📊 Reports</a>
-            </li>
-
-            <li>
-                <a href="pages/settings.html">⚙️ Settings</a>
-            </li>
-
-            <li>
-                <a href="#" id="logoutBtn">🚪 Logout</a>
-            </li>
-
-        </ul>
-
-    </aside>
-
-    <!-- Main Content -->
-
-    <main class="main-content">
-
-        <header class="topbar">
-
-            <div>
-
-                <h1>Dashboard</h1>
-
-                <p>Welcome to AKR House Apartment Management System</p>
-
-            </div>
-
-            <div class="profile">
-
-                <span id="adminName">
-                    AKR Admin
-                </span>
-
-            </div>
-
-        </header>
-
-        <!-- Dashboard Cards -->
-
-        <section class="cards">
-
-            <div class="card">
-
-                <h3>Total Residents</h3>
-
-                <h2 id="residentCount">0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Occupied Flats</h3>
-
-                <h2 id="occupiedCount">0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Vacant Flats</h3>
-
-                <h2 id="vacantCount">30</h2>
-
-            </div>
-
-            <div class="card">
-
-                <h3>Pending Approvals</h3>
-
-                <h2 id="pendingCount">0</h2>
-
-            </div>
-
-                    </section>
-
-        
-        <!-- Pending Resident Approvals -->
-
-        <section class="panel">
-
-            <div class="panel-header">
-
-                <h2>Pending Resident Approvals</h2>
-
-                <a href="pages/residents.html">View All</a>
-
-            </div>
-
-            <table class="table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Name</th>
-
-                        <th>Flat</th>
-
-                        <th>Mobile</th>
-
-                        <th>Status</th>
-
-                        <th>Action</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="pendingResidents">
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-
-        <!-- Dashboard Row -->
-
-        <div class="dashboard-row">
-
-
-            <!-- Latest Notices -->
-
-            <section class="panel">
-
-                <div class="panel-header">
-
-                    <h2>Latest Notices</h2>
-
-                    <a href="pages/notices.html">Manage</a>
-
-                </div>
-
-                <div id="latestNotices">
-
-                    <p>No notices available.</p>
-
-                </div>
-
-            </section>
-
-
-            <!-- Recent Activities -->
-
-            <section class="panel">
-
-                <div class="panel-header">
-
-                    <h2>Recent Activities</h2>
-
-                </div>
-
-                <div id="recentActivities">
-
-                    <ul>
-
-                        <li>System Ready</li>
-
-                        <li>Firebase Connected</li>
-
-                        <li>Admin Logged In</li>
-
-                    </ul>
-
-                </div>
-
-            </section>
-
-        </div>
-
-
-        <!-- Quick Actions -->
-
-        <section class="panel">
-
-            <div class="panel-header">
-
-                <h2>Quick Actions</h2>
-
-            </div>
-
-            <div class="quick-grid">
-
-                <button onclick="location.href='pages/residents.html'">
-                    👥 Residents
-                </button>
-
-                <button onclick="location.href='pages/flats.html'">
-                    🏢 Flats
-                </button>
-
-                <button onclick="location.href='pages/maintenance.html'">
-                    💰 Maintenance
-                </button>
-
-                <button onclick="location.href='pages/payments.html'">
-                    💳 Payments
-                </button>
-
-                <button onclick="location.href='pages/complaints.html'">
-                    📋 Complaints
-                </button>
-
-                <button onclick="location.href='pages/visitors.html'">
-                    🚶 Visitors
-                </button>
-
-                <button onclick="location.href='pages/notices.html'">
-                    📢 Notices
-                </button>
-
-                <button onclick="location.href='pages/reports.html'">
-                    📊 Reports
-                </button>
-
-            </div>
-
-        </section>
-
-    </main>
+<p>Admin Panel</p>
 
 </div>
 
+<ul class="menu">
+
+<li class="active">
+<a href="admin.html">
+🏠 Dashboard
+</a>
+</li>
+
+<li>
+<a href="pages/residents.html">
+👥 Residents
+</a>
+</li>
+
+<li>
+<a href="pages/flats.html">
+🏢 Flats
+</a>
+</li>
+
+<li>
+<a href="pages/maintenance.html">
+💰 Maintenance
+</a>
+</li>
+
+<li>
+<a href="pages/payments.html">
+💳 Payments
+</a>
+</li>
+
+<li>
+<a href="pages/complaints.html">
+📋 Complaints
+</a>
+</li>
+
+<li>
+<a href="pages/visitors.html">
+🚶 Visitors
+</a>
+</li>
+
+<li>
+<a href="pages/notices.html">
+📢 Notices
+</a>
+</li>
+
+<li>
+<a href="pages/reports.html">
+📊 Reports
+</a>
+</li>
+
+<li>
+<a href="pages/settings.html">
+⚙️ Settings
+</a>
+</li>
+
+<li>
+<a href="#" id="logoutBtn">
+🚪 Logout
+</a>
+</li>
+
+</ul>
+
+</aside>
+
+<!-- ===========================
+     Main Content
+=========================== -->
+
+<main class="main-content">
+
+<header class="topbar">
+
+<div>
+
+<h1>Dashboard</h1>
+
+<p>
+Welcome to AKR House Apartment Management System
+</p>
+
+</div>
+
+<div class="profile">
+
+<span id="adminName">
+
+AKR Admin
+
+</span>
+
+</div>
+
+</header>
+
+<!-- ===========================
+     Dashboard Cards
+=========================== -->
+
+<section class="cards">
+
+<div class="card">
+
+<h3>Total Residents</h3>
+
+<h2 id="residentCount">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Occupied Flats</h3>
+
+<h2 id="occupiedCount">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Vacant Flats</h3>
+
+<h2 id="vacantCount">30</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Pending Approvals</h3>
+
+<h2 id="pendingCount">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Open Complaints</h3>
+
+<h2 id="complaintCount">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Today's Visitors</h3>
+
+<h2 id="visitorCount">0</h2>
+
+</div>
+
+</section>
+
+    <!-- ===========================
+     Dashboard Row
+=========================== -->
+
+<div class="dashboard-row">
+
+    <!-- Pending Residents -->
+
+    <section class="panel">
+
+        <div class="panel-header">
+            <h2>Pending Resident Approvals</h2>
+            <a href="pages/residents.html">View All</a>
+        </div>
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Flat</th>
+                    <th>Mobile</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="pendingResidents">
+
+                <tr>
+
+                    <td colspan="4">
+
+                        No pending approvals
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+    <!-- Latest Notices -->
+
+    <section class="panel">
+
+        <div class="panel-header">
+
+            <h2>Latest Notices</h2>
+
+            <a href="pages/notices.html">
+                Manage
+            </a>
+
+        </div>
+
+        <div id="latestNotices">
+
+            <p>No notices available.</p>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ===========================
+     Recent Activity
+=========================== -->
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <h2>Recent Activities</h2>
+
+    </div>
+
+    <ul id="recentActivities">
+
+        <li>System initialized successfully.</li>
+
+        <li>Waiting for resident approvals.</li>
+
+    </ul>
+
+</section>
+
+<!-- ===========================
+     Quick Actions
+=========================== -->
+
+<section class="panel">
+
+    <div class="panel-header">
+
+        <h2>Quick Actions</h2>
+
+    </div>
+
+    <div class="quick-grid">
+
+        <button onclick="location.href='pages/residents.html'">
+            👥 Residents
+        </button>
+
+        <button onclick="location.href='pages/flats.html'">
+            🏢 Flats
+        </button>
+
+        <button onclick="location.href='pages/maintenance.html'">
+            💰 Maintenance
+        </button>
+
+        <button onclick="location.href='pages/payments.html'">
+            💳 Payments
+        </button>
+
+        <button onclick="location.href='pages/complaints.html'">
+            📋 Complaints
+        </button>
+
+        <button onclick="location.href='pages/visitors.html'">
+            🚶 Visitors
+        </button>
+
+        <button onclick="location.href='pages/notices.html'">
+            📢 Notices
+        </button>
+
+        <button onclick="location.href='pages/reports.html'">
+            📊 Reports
+        </button>
+
+    </div>
+
+</section>
+
+
+    <!-- ===========================
+     Footer
+=========================== -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 AKR House Apartment Management System
+    </p>
+
+    <p>
+        Version 1.0 | Developed by AKR AMS
+    </p>
+
+</footer>
+
+</main>
+
+</div>
+
+<!-- ===========================
+     Firebase Dashboard Script
+=========================== -->
+
 <script type="module" src="js/dashboard.js"></script>
+
+<script>
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        if (confirm("Are you sure you want to logout?")) {
+
+            localStorage.clear();
+
+            window.location.href = "login.html";
+
+        }
+
+    });
+
+}
+
+</script>
 
 </body>
 
 </html>
-        
+
