@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Maintenance Reports | AKR AMS</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/maintenance.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
+
+<div>
+<h2>Maintenance Reports</h2>
+<p>AKR House Apartments</p>
+</div>
+
+</header>
+
+<section class="summary-cards">
+
+<div class="summary-card">
+<h3>Total Collection</h3>
+<h2 id="totalCollection">₹0</h2>
+</div>
+
+<div class="summary-card">
+<h3>Pending Amount</h3>
+<h2 id="pendingAmount">₹0</h2>
+</div>
+
+<div class="summary-card">
+<h3>Paid Flats</h3>
+<h2 id="paidFlats">0</h2>
+</div>
+
+<div class="summary-card">
+<h3>Pending Flats</h3>
+<h2 id="pendingFlats">0</h2>
+</div>
+
+</section>
+
+<section class="panel">
+
+<button id="exportCSV">Export CSV</button>
+
+<button onclick="window.print()">Print Report</button>
+
+</section>
+
+<table class="maintenance-table">
+
+<thead>
+
+<tr>
+
+<th>Flat</th>
+<th>Owner</th>
+<th>Amount</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="reportTable">
+
+</tbody>
+
+</table>
+
+<script src="js/reports.js"></script>
+
+</body>
+</html>
