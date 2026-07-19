@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Complaints | AKR AMS</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+<div class="logo-area">
+
+<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
+
+<div>
+
+<h2>Complaint Management</h2>
+
+<p>AKR House Apartments</p>
+
+</div>
+
+</div>
+
+</header>
+
+<section class="welcome">
+
+<h2>Raise a Complaint</h2>
+
+<p>Submit your issue to the apartment administration.</p>
+
+</section>
+
+<section class="dashboard">
+
+<form id="complaintForm" class="card">
+
+<label>Complaint Category</label>
+
+<select id="category" required>
+
+<option value="">Select Category</option>
+
+<option>Electrical</option>
+
+<option>Plumbing</option>
+
+<option>Water Supply</option>
+
+<option>Lift</option>
+
+<option>Parking</option>
+
+<option>Security</option>
+
+<option>Housekeeping</option>
+
+<option>Noise</option>
+
+<option>Others</option>
+
+</select>
+
+<br><br>
+
+<label>Complaint Title</label>
+
+<input
+type="text"
+id="title"
+placeholder="Enter complaint title"
+required>
+
+<br><br>
+
+<label>Description</label>
+
+<textarea
+id="description"
+rows="5"
+placeholder="Describe the issue"
+required></textarea>
+
+<br><br>
+
+<button type="submit">
+
+Submit Complaint
+
+</button>
+
+</form>
+
+<div class="card">
+
+<h3>Complaint Status</h3>
+
+<p>Pending : 0</p>
+
+<p>In Progress : 0</p>
+
+<p>Resolved : 0</p>
+
+</div>
+
+</section>
+
+<nav class="bottom-nav">
+
+<a href="resident.html">🏠<br>Home</a>
+
+<a href="maintenance.html">💰<br>Maintenance</a>
+
+<a href="complaints.html">🔧<br>Complaint</a>
+
+<a href="profile.html">👤<br>Profile</a>
+
+</nav>
+
+<script src="js/complaints.js"></script>
+
+</body>
+
+</html>
