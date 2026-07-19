@@ -485,3 +485,14 @@ body{
 padding-bottom:80px;
 
 }
+
+
+/* Notice Priority */
+
+.card[data-priority="important"]{
+    border-left:6px solid #d32f2f;
+}
+
+.card[data-priority="normal"]{
+    border-left:6px solid #1565C0;
+}
