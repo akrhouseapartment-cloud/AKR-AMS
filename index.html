@@ -1,34 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AKR AMS</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKR House Apartment Management System</title>
 
-<link rel="stylesheet" href="css/style.css">
-<script src="js/navigation.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        body{
+            background:#f4f7fb;
+        }
+
+        header{
+            background:#1565C0;
+            color:white;
+            text-align:center;
+            padding:40px 20px;
+            border-bottom-left-radius:25px;
+            border-bottom-right-radius:25px;
+            box-shadow:0 4px 10px rgba(0,0,0,.2);
+        }
+
+        header h1{
+            font-size:32px;
+            margin-bottom:10px;
+        }
+
+        header p{
+            font-size:18px;
+        }
+
+        .container{
+            width:90%;
+            max-width:450px;
+            margin:30px auto;
+        }
+
+        .card{
+            background:white;
+            padding:25px;
+            border-radius:18px;
+            margin-bottom:20px;
+            box-shadow:0 5px 15px rgba(0,0,0,.1);
+            text-align:center;
+        }
+
+        .card h2{
+            color:#1565C0;
+            margin-bottom:15px;
+        }
+
+        .card p{
+            color:#666;
+            margin-bottom:20px;
+            line-height:1.5;
+        }
+
+        .btn{
+            display:block;
+            width:100%;
+            padding:15px;
+            margin-top:12px;
+            text-decoration:none;
+            color:white;
+            background:#1565C0;
+            border-radius:10px;
+            font-weight:bold;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            background:#0D47A1;
+        }
+
+        footer{
+            text-align:center;
+            padding:25px;
+            color:#777;
+            font-size:14px;
+        }
+    </style>
 </head>
 
 <body>
 
+<header>
+    <h1>🏢 AKR House Apartment</h1>
+    <p>Apartment Management System</p>
+</header>
+
 <div class="container">
 
-<h1>🏢 AKR House Apartment</h1>
+    <div class="card">
+        <h2>👋 Welcome</h2>
+        <p>
+            Manage residents, maintenance, complaints, visitors and notices
+            from one place.
+        </p>
 
-<h2>Apartment Management System</h2>
+        <a href="login.html" class="btn">
+            🔑 Resident Login
+        </a>
 
-<button onclick="goToLogin()">Resident Login</button>
+        <a href="register.html" class="btn">
+            📝 Register Resident
+        </a>
 
-<br><br>
+        <a href="admin.html" class="btn">
+            👨‍💼 Admin Dashboard
+        </a>
+    </div>
 
-<button onclick="goToRegister()">Register</button>
+    <div class="card">
+        <h2>📋 Features</h2>
 
-<br><br>
-
-<button onclick="goToAdmin()">Admin Dashboard</button>
+        <p>🏠 Resident Management</p>
+        <p>💰 Maintenance Tracking</p>
+        <p>🔧 Complaint Management</p>
+        <p>🚶 Visitor Register</p>
+        <p>📢 Notice Board</p>
+        <p>📊 Reports & Dashboard</p>
+    </div>
 
 </div>
+
+<footer>
+    © 2026 AKR House Apartment Management System
+</footer>
 
 </body>
 </html>
