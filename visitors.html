@@ -4,11 +4,13 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visitor Management | AKR AMS</title>
+<title>Visitors | AKR AMS</title>
 
-<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/visitors.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -16,112 +18,263 @@
 
 <body>
 
+<div class="container">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../assets/images/logopng.png" class="logo">
+
+<h2>AKR AMS</h2>
+
+</div>
+
+<ul class="menu">
+
+<li><a href="../admin.html">🏠 Dashboard</a></li>
+
+<li><a href="residents.html">👥 Residents</a></li>
+
+<li><a href="flats.html">🏢 Flats</a></li>
+
+<li><a href="maintenance.html">💰 Maintenance</a></li>
+
+<li><a href="complaints.html">📋 Complaints</a></li>
+
+<li class="active"><a href="visitors.html">🚶 Visitors</a></li>
+
+<li><a href="notices.html">📢 Notices</a></li>
+
+<li><a href="../admin.html">🚪 Logout</a></li>
+
+</ul>
+
+</aside>
+
+<!-- Main Content -->
+
+<main class="main-content">
+
 <header class="topbar">
-
-<div class="logo-area">
-
-<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
 
 <div>
 
-<h2>Visitor Management</h2>
+<h1>Visitor Management</h1>
 
 <p>AKR House Apartments</p>
 
 </div>
 
-</div>
+<button id="addVisitorBtn">
 
-<div>🚶</div>
++ New Visitor
+
+</button>
 
 </header>
 
-<section class="welcome">
+<!-- Summary Cards -->
 
-<h2>Register Visitor</h2>
+<section class="summary-cards">
 
-<p>Add visitor details before arrival.</p>
+<div class="summary-card">
+
+<h3>Total Visitors</h3>
+
+<h2 id="totalVisitors">0</h2>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Checked In</h3>
+
+<h2 id="checkedInVisitors">0</h2>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Checked Out</h3>
+
+<h2 id="checkedOutVisitors">0</h2>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Today's Visitors</h3>
+
+<h2 id="todayVisitors">0</h2>
+
+</div>
 
 </section>
 
-<section class="dashboard">
+<!-- Search -->
 
-<form id="visitorForm" class="card">
+<section class="panel">
+
+<input
+type="text"
+id="searchVisitor"
+placeholder="Search by Visitor or Flat Number">
+
+<select id="visitorStatusFilter">
+
+<option value="">All Status</option>
+
+<option>Checked In</option>
+
+<option>Checked Out</option>
+
+</select>
+
+</section>
+
+<!-- Visitors Table -->
+
+<table class="visitors-table">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Visitor</th>
+
+<th>Mobile</th>
+
+<th>Flat</th>
+
+<th>Purpose</th>
+
+<th>Check In</th>
+
+<th>Check Out</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="visitorsTable">
+
+</tbody>
+
+</table>
+
+  <!-- Visitor Modal -->
+
+<div class="modal" id="visitorModal">
+
+<div class="modal-content">
+
+<h2>Visitor Details</h2>
+
+<label>Visitor Name</label>
 
 <input
 type="text"
 id="visitorName"
-placeholder="Visitor Name"
-required>
+placeholder="Enter visitor name">
 
-<br><br>
+<label>Mobile Number</label>
 
 <input
 type="tel"
-id="visitorPhone"
-placeholder="Mobile Number"
-maxlength="10"
-required>
+id="visitorMobile"
+placeholder="Enter mobile number">
 
-<br><br>
+<label>Flat Number</label>
 
 <input
 type="text"
-id="vehicle"
-placeholder="Vehicle Number (Optional)">
+id="visitorFlat"
+placeholder="Example: 301">
 
-<br><br>
+<label>Purpose of Visit</label>
 
-<select id="purpose" required>
+<select id="visitorPurpose">
 
-<option value="">Purpose of Visit</option>
+<option value="">Select Purpose</option>
 
-<option>Family</option>
-<option>Guest</option>
+<option>Family Visit</option>
+
+<option>Friends</option>
+
 <option>Delivery</option>
-<option>Maid</option>
-<option>Cook</option>
-<option>Driver</option>
-<option>Electrician</option>
-<option>Plumber</option>
+
+<option>Maintenance</option>
+
+<option>Housekeeping</option>
+
+<option>Courier</option>
+
+<option>Guest</option>
+
 <option>Others</option>
 
 </select>
 
-<br><br>
+<label>Check-In Time</label>
 
-<button type="submit">
+<input
+type="datetime-local"
+id="checkInTime">
 
-Register Visitor
+<label>Check-Out Time</label>
+
+<input
+type="datetime-local"
+id="checkOutTime">
+
+<label>Status</label>
+
+<select id="visitorStatus">
+
+<option>Checked In</option>
+
+<option>Checked Out</option>
+
+</select>
+
+<div class="modal-buttons">
+
+<button id="saveVisitor">
+
+💾 Save
 
 </button>
 
-</form>
+<button id="closeVisitorModal">
 
-<div class="card">
+❌ Close
 
-<h3>Today's Visitors</h3>
-
-<p id="visitorCount">0</p>
+</button>
 
 </div>
 
-</section>
+</div>
 
-<nav class="bottom-nav">
+</div>
 
-<a href="resident.html">🏠<br>Home</a>
+<script type="module" src="../js/visitors.js"></script>
 
-<a href="maintenance.html">💰<br>Maintenance</a>
+</main>
 
-<a href="complaints.html">🔧<br>Complaint</a>
-
-<a href="profile.html">👤<br>Profile</a>
-
-</nav>
-
-<script src="js/visitors.js"></script>
+</div>
 
 </body>
 
 </html>
+
+
+  
