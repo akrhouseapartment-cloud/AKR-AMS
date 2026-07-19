@@ -1,105 +1,147 @@
-
 /* ==========================================
-   AKR House Apartment Management System
-   admin.js
-   Version : v0.5
+   AKR AMS
+   Admin Dashboard
 ========================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+import { auth, db } from "./firebase.js";
 
-    console.log("AKR AMS Admin Dashboard Loaded");
+import {
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-    welcomeMessage();
+import {
+    collection,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-    animateCards();
+const residentCount = document.getElementById("residentCount");
+const pendingCount = document.getElementById("pendingCount");
+const vacantCount = document.getElementById("vacantCount");
+const pendingResidents = document.getElementById("pendingResidents");
+const logoutBtn = document.getElementById("logoutBtn");
 
-    setupLogout();
+loadDashboard();
+
+logoutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+    localStorage.removeItem("akrAdmin");
+
+    window.location.href = "admin-login.html";
 
 });
 
-// -----------------------------
-// Welcome Message
-// -----------------------------
-function welcomeMessage(){
+async function loadDashboard() {
 
-    const hour = new Date().getHours();
+    pendingResidents.innerHTML = "";
 
-    let greeting = "";
+    let totalResidents = 0;
+    let pendingResidentsCount = 0;
 
-    if(hour < 12){
-        greeting = "🌅 Good Morning Admin";
-    }else if(hour < 17){
-        greeting = "☀️ Good Afternoon Admin";
-    }else if(hour < 21){
-        greeting = "🌇 Good Evening Admin";
-    }else{
-        greeting = "🌙 Good Night Admin";
-    }
+    const residentSnapshot = await getDocs(collection(db, "residents"));
 
-    const heading = document.querySelector(".welcome h2");
+    residentSnapshot.forEach((documentItem) => {
 
-    if(heading){
-        heading.innerHTML = greeting + " 👋";
-    }
+        totalResidents++;
 
-}
+        const resident = documentItem.data();
 
-// -----------------------------
-// Card Animation
-// -----------------------------
-function animateCards(){
+        if (resident.status === "Pending") {
 
-    const cards = document.querySelectorAll(".card");
+            pendingResidentsCount++;
 
-    cards.forEach((card,index)=>{
+            pendingResidents.innerHTML += `
 
-        card.style.opacity="0";
-        card.style.transform="translateY(30px)";
+<tr>
 
-        setTimeout(()=>{
+<td>${resident.fullName}</td>
 
-            card.style.transition="0.5s";
+<td>${resident.flat}</td>
 
-            card.style.opacity="1";
+<td>${resident.mobile}</td>
 
-            card.style.transform="translateY(0)";
+<td>
 
-        },index*120);
+<button class="approveBtn"
+onclick="approveResident('${documentItem.id}')">
 
-    });
+Approve
 
-}
+</button>
 
-// -----------------------------
-// Logout
-// -----------------------------
-function setupLogout(){
+<button class="rejectBtn"
+onclick="rejectResident('${documentItem.id}')">
 
-    const logout=document.getElementById("logoutBtn");
+Reject
 
-    if(!logout) return;
+</button>
 
-    logout.addEventListener("click",function(e){
+</td>
 
-        e.preventDefault();
+</tr>
 
-        if(confirm("Logout from Admin Panel?")){
-
-            localStorage.removeItem("akrResident");
-
-            window.location.href="index.html";
+`;
 
         }
 
     });
 
+    residentCount.textContent = totalResidents;
+
+    pendingCount.textContent = pendingResidentsCount;
+
+    loadVacantFlats();
+
 }
 
-// -----------------------------
-// Future Statistics
-// -----------------------------
-function updateStatistics(){
+async function loadVacantFlats() {
 
-    console.log("Statistics will load from Google Sheets");
+    let vacant = 0;
+
+    const flatSnapshot = await getDocs(collection(db, "flats"));
+
+    flatSnapshot.forEach((flatDoc) => {
+
+        const flat = flatDoc.data();
+
+        if (flat.status === "Vacant") {
+
+            vacant++;
+
+        }
+
+    });
+
+    vacantCount.textContent = vacant;
+
+}
+
+window.approveResident = async function (id) {
+
+    await updateDoc(doc(db, "residents", id), {
+
+        status: "Approved"
+
+    });
+
+    alert("Resident Approved Successfully");
+
+    loadDashboard();
+
+}
+
+window.rejectResident = async function (id) {
+
+    if (!confirm("Reject this resident?")) return;
+
+    await deleteDoc(doc(db, "residents", id));
+
+    alert("Resident Rejected");
+
+    loadDashboard();
 
 }
