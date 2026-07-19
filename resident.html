@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resident Dashboard | AKR AMS</title>
+<title>Residents | AKR AMS</title>
 
-<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/residents.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -15,91 +17,252 @@
 
 <body>
 
-<header class="topbar">
+<div class="container">
 
-<div class="logo-area">
+    <!-- Sidebar -->
 
-<img src="assets/images/logopng.png" class="logo">
+    <aside class="sidebar">
 
-<div>
+        <div class="sidebar-header">
 
-<h2>AKR House Apartments</h2>
+            <img src="../assets/images/logopng.png" class="logo">
 
-<p>Resident Dashboard</p>
+            <h2>AKR AMS</h2>
+
+        </div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="../admin.html">🏠 Dashboard</a>
+            </li>
+
+            <li class="active">
+                <a href="residents.html">👥 Residents</a>
+            </li>
+
+            <li>
+                <a href="flats.html">🏢 Flats</a>
+            </li>
+
+            <li>
+                <a href="maintenance.html">💰 Maintenance</a>
+            </li>
+
+            <li>
+                <a href="payments.html">💳 Payments</a>
+            </li>
+
+            <li>
+                <a href="complaints.html">📋 Complaints</a>
+            </li>
+
+            <li>
+                <a href="visitors.html">🚶 Visitors</a>
+            </li>
+
+            <li>
+                <a href="notices.html">📢 Notices</a>
+            </li>
+
+            <li>
+                <a href="reports.html">📊 Reports</a>
+            </li>
+
+            <li>
+                <a href="../admin.html" id="logoutBtn">🚪 Logout</a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Resident Management</h1>
+
+                <p>Manage apartment residents</p>
+
+            </div>
+
+            <button id="addResidentBtn">
+
+                + Add Resident
+
+            </button>
+
+        </header>
+
+        <!-- Search -->
+
+        <section class="panel">
+
+            <div class="search-area">
+
+                <input
+                    type="text"
+                    id="searchResident"
+                    placeholder="Search by Name, Mobile or Flat">
+
+                <select id="statusFilter">
+
+                    <option value="">All Status</option>
+
+                    <option value="Approved">Approved</option>
+
+                    <option value="Pending">Pending</option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+        <!-- Residents Table -->
+
+        <section class="panel">
+
+            <table class="table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+
+                        <th>Flat</th>
+
+                        <th>Mobile</th>
+
+                        <th>Email</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="residentTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
 
 </div>
 
+<!-- Add/Edit Resident Modal -->
+
+<div class="modal" id="residentModal">
+
+    <div class="modal-content">
+
+        <h2>Add Resident</h2>
+
+        <form id="residentForm">
+
+            <input
+                type="text"
+                id="fullName"
+                placeholder="Full Name"
+                required>
+
+            <input
+                type="text"
+                id="mobile"
+                placeholder="Mobile Number"
+                required>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email Address"
+                required>
+
+            <select id="flat" required>
+
+                <option value="">Select Flat</option>
+
+                <option>001</option>
+                <option>002</option>
+                <option>003</option>
+
+                <option>101</option>
+                <option>102</option>
+                <option>103</option>
+                <option>104</option>
+                <option>105</option>
+
+                <option>201</option>
+                <option>202</option>
+                <option>203</option>
+                <option>204</option>
+                <option>205</option>
+
+                <option>301</option>
+                <option>302</option>
+                <option>303</option>
+                <option>304</option>
+                <option>305</option>
+
+                <option>401</option>
+                <option>402</option>
+                <option>403</option>
+                <option>404</option>
+                <option>405</option>
+                <option>406</option>
+
+                <option>501</option>
+                <option>502</option>
+                <option>503</option>
+                <option>504</option>
+                <option>505</option>
+                <option>506</option>
+
+            </select>
+
+            <select id="status">
+
+                <option value="Pending">Pending</option>
+
+                <option value="Approved">Approved</option>
+
+            </select>
+
+            <div class="modal-buttons">
+
+                <button type="submit">
+
+                    Save
+
+                </button>
+
+                <button type="button" id="closeModal">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
 
-<div class="notification">🔔</div>
-
-</header>
-
-<section class="welcome">
-
-<h2>Welcome, Resident 👋</h2>
-
-<p>Flat Number : <strong>--</strong></p>
-
-</section>
-
-<section class="dashboard">
-
-<a href="profile.html" class="card">
-<h3>👤 Profile</h3>
-<p>View your profile</p>
-</a>
-
-<a href="maintenance.html" class="card">
-<h3>💰 Maintenance</h3>
-<p>Check dues & payments</p>
-</a>
-
-<a href="complaints.html" class="card">
-<h3>🔧 Complaints</h3>
-<p>Raise a complaint</p>
-</a>
-
-<a href="visitors.html" class="card">
-<h3>🚶 Visitors</h3>
-<p>Manage visitors</p>
-</a>
-
-<a href="notices.html" class="card">
-<h3>📢 Notices</h3>
-<p>Apartment announcements</p>
-</a>
-
-<a href="rules.html" class="card">
-<h3>📖 Rules</h3>
-<p>Community rules</p>
-</a>
-
-<a href="emergency.html" class="card">
-<h3>📞 Emergency</h3>
-<p>Emergency contacts</p>
-</a>
-
-<a href="index.html" class="card">
-<h3>🚪 Logout</h3>
-<p>Exit safely</p>
-</a>
-
-</section>
-
-<nav class="bottom-nav">
-
-<a href="resident.html">🏠<br>Home</a>
-
-<a href="maintenance.html">💰<br>Due</a>
-
-<a href="complaints.html">🔧<br>Complaint</a>
-
-<a href="profile.html">👤<br>Profile</a>
-
-</nav>
-
-<script src="js/resident.js"></script>
+<script type="module" src="../js/residents.js"></script>
 
 </body>
 </html>
