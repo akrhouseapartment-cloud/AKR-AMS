@@ -1,19 +1,52 @@
-function login() {
+// ==========================================
+// AKR House Apartment Management System
+// File : auth.js
+// Version : v0.2
+// ==========================================
 
-    const mobile = document.getElementById("mobile").value.trim();
-    const password = document.getElementById("password").value.trim();
+document.addEventListener("DOMContentLoaded", function () {
 
-    if (mobile === "") {
-        alert("Please enter Mobile Number");
-        return;
-    }
+    const loginForm = document.getElementById("loginForm");
 
-    if (password === "") {
-        alert("Please enter Password");
-        return;
-    }
+    if (!loginForm) return;
 
-    alert("Login Successful!");
+    loginForm.addEventListener("submit", function (event) {
 
-    window.location.href = "resident.html";
-}
+        event.preventDefault();
+
+        const mobile = document.getElementById("mobile").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const role = document.getElementById("role").value;
+
+        // Mobile validation
+        if (!/^[6-9]\d{9}$/.test(mobile)) {
+            alert("Please enter a valid 10-digit mobile number.");
+            return;
+        }
+
+        // Password validation
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters.");
+            return;
+        }
+
+        // Role validation
+        if (role === "") {
+            alert("Please select your role.");
+            return;
+        }
+
+        // Temporary login (until Google Sheets integration)
+        if (role === "resident") {
+            alert("Resident Login Successful");
+            window.location.href = "resident.html";
+        }
+
+        if (role === "admin") {
+            alert("Admin Login Successful");
+            window.location.href = "admin.html";
+        }
+
+    });
+
+});
