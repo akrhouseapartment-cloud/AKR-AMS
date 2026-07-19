@@ -1,512 +1,83 @@
-/* ==========================================
-   AKR AMS
-   Resident Management
-   Part 1
-========================================== */
-
-import { db } from "./firebase.js";
-
-import {
-    collection,
-    getDocs,
-    addDoc,
-    updateDoc,
-    deleteDoc,
-    doc
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-
-// ----------------------------
-// DOM Elements
-// ----------------------------
-
-const residentTable = document.getElementById("residentTable");
-const residentForm = document.getElementById("residentForm");
-const residentModal = document.getElementById("residentModal");
-
-const addResidentBtn = document.getElementById("addResidentBtn");
-const closeModal = document.getElementById("closeModal");
-
-const searchResident = document.getElementById("searchResident");
-const statusFilter = document.getElementById("statusFilter");
-
-// Form Fields
-
-const fullName = document.getElementById("fullName");
-const mobile = document.getElementById("mobile");
-const email = document.getElementById("email");
-const flat = document.getElementById("flat");
-const status = document.getElementById("status");
-
-// ----------------------------
-// Global Variables
-// ----------------------------
-
-let residents = [];
-let editResidentId = null;
-
-// ----------------------------
-// Initial Load
-// ----------------------------
+document.addEventListener("DOMContentLoaded", () => {
 
 loadResidents();
 
-// ----------------------------
-// Load Residents
-// ----------------------------
+});
 
-async function loadResidents() {
+function loadResidents(){
 
-    residentTable.innerHTML = "";
+const residents =
+JSON.parse(localStorage.getItem("akrResidents")) || [];
 
-    residents = [];
+const body =
+document.getElementById("residentTableBody");
 
-    const snapshot = await getDocs(
-        collection(db, "residents")
-    );
+body.innerHTML="";
 
-    snapshot.forEach((documentItem) => {
+residents.forEach((r,index)=>{
 
-        residents.push({
+body.innerHTML+=`
 
-            id: documentItem.id,
+<tr>
 
-            ...documentItem.data()
+<td>${r.flat}</td>
 
-        });
+<td>${r.name}</td>
 
-    });
+<td>${r.mobile}</td>
 
-    displayResidents(residents);
-   getResidentStatistics();
+<td>${r.status||"Active"}</td>
 
-}
+<td>
 
-// ----------------------------
-// Display Residents
-// ----------------------------
+<button onclick="deleteResident(${index})">
 
-function displayResidents(data) {
+Delete
 
-    residentTable.innerHTML = "";
+</button>
 
-    if (data.length === 0) {
+</td>
 
-        residentTable.innerHTML = `
-        <tr>
-            <td colspan="6">
-                No Residents Found
-            </td>
-        </tr>
-        `;
+</tr>
 
-        return;
-
-    }
-
-    data.forEach((resident) => {
-
-        residentTable.innerHTML += `
-
-        <tr>
-
-            <td>${resident.fullName}</td>
-
-            <td>${resident.flat}</td>
-
-            <td>${resident.mobile}</td>
-
-            <td>${resident.email}</td>
-
-            <td>${resident.status}</td>
-
-            <td>
-
-                <button
-                    class="editBtn"
-                    onclick="editResident('${resident.id}')">
-
-                    Edit
-
-                </button>
-
-                <button
-                    class="deleteBtn"
-                    onclick="deleteResident('${resident.id}')">
-
-                    Delete
-
-                </button>
-
-            </td>
-
-        </tr>
-
-        `;
-
-    });
-
-}
-
-
-
-// ----------------------------
-// Modal Events
-// ----------------------------
-
-addResidentBtn.addEventListener("click", () => {
-
-    editResidentId = null;
-
-    residentForm.reset();
-
-    status.value = "Pending";
-
-    residentModal.style.display = "flex";
+`;
 
 });
 
-closeModal.addEventListener("click", () => {
+}
 
-    residentModal.style.display = "none";
+function deleteResident(index){
+
+let residents=
+JSON.parse(localStorage.getItem("akrResidents"))||[];
+
+residents.splice(index,1);
+
+localStorage.setItem(
+"akrResidents",
+JSON.stringify(residents)
+);
+
+loadResidents();
+
+}
+
+document
+.getElementById("searchResident")
+.addEventListener("input",function(){
+
+const keyword=this.value.toLowerCase();
+
+document
+.querySelectorAll("#residentTableBody tr")
+.forEach(row=>{
+
+row.style.display=
+row.innerText
+.toLowerCase()
+.includes(keyword)
+?"":"none";
 
 });
 
-window.addEventListener("click", (e) => {
-
-    if (e.target === residentModal) {
-
-        residentModal.style.display = "none";
-
-    }
-
 });
-
-// ----------------------------
-// Save Resident
-// ----------------------------
-
-residentForm.addEventListener("submit", saveResident);
-
-async function saveResident(e){
-
-    e.preventDefault();
-
-    const residentData={
-
-        fullName:fullName.value.trim(),
-
-        mobile:mobile.value.trim(),
-
-        email:email.value.trim(),
-
-        flat:flat.value,
-
-        status:status.value
-
-    };
-
-    try{
-
-        if(editResidentId){
-
-            await updateDoc(
-
-                doc(db,"residents",editResidentId),
-
-                residentData
-
-            );
-
-            alert("Resident Updated Successfully");
-
-        }
-
-        else{
-
-            await addDoc(
-
-                collection(db,"residents"),
-
-                residentData
-
-            );
-
-            alert("Resident Added Successfully");
-
-        }
-
-        residentModal.style.display="none";
-
-        residentForm.reset();
-
-        editResidentId=null;
-
-        loadResidents();
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
-
-}
-
-// ----------------------------
-// Edit Resident
-// ----------------------------
-
-window.editResident=function(id){
-
-   if(!validateResident()){
-    return;
-   }
-    const resident=residents.find(r=>r.id===id);
-
-    if(!resident){
-
-        alert("Resident not found");
-
-        return;
-
-    }
-
-    editResidentId=id;
-
-    fullName.value=resident.fullName;
-
-    mobile.value=resident.mobile;
-
-    email.value=resident.email;
-
-    flat.value=resident.flat;
-
-    status.value=resident.status;
-
-    residentModal.style.display="flex";
-
-};
-
-
-// ----------------------------
-// Delete Resident
-// ----------------------------
-
-window.deleteResident = async function(id){
-
-    const confirmDelete = confirm(
-        "Are you sure you want to delete this resident?"
-    );
-
-    if(!confirmDelete){
-        return;
-    }
-
-    try{
-
-        await deleteDoc(
-            doc(db,"residents",id)
-        );
-
-        alert("Resident Deleted Successfully");
-
-        loadResidents();
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        alert(error.message);
-
-    }
-
-};
-
-// ----------------------------
-// Search Residents
-// ----------------------------
-
-searchResident.addEventListener("input", filterResidents);
-
-statusFilter.addEventListener("change", filterResidents);
-
-function filterResidents(){
-
-    const keyword = searchResident.value
-        .toLowerCase()
-        .trim();
-
-    const selectedStatus = statusFilter.value;
-
-    const filteredResidents = residents.filter((resident)=>{
-
-        const matchesSearch =
-
-            resident.fullName
-                .toLowerCase()
-                .includes(keyword)
-
-            ||
-
-            resident.mobile
-                .toLowerCase()
-                .includes(keyword)
-
-            ||
-
-            resident.email
-                .toLowerCase()
-                .includes(keyword)
-
-            ||
-
-            resident.flat
-                .toLowerCase()
-                .includes(keyword);
-
-        const matchesStatus =
-
-            selectedStatus === ""
-
-            ||
-
-            resident.status === selectedStatus;
-
-        return matchesSearch && matchesStatus;
-
-    });
-
-    displayResidents(filteredResidents);
-
-}
-
-// ----------------------------
-// Refresh Table
-// ----------------------------
-
-function refreshResidents(){
-
-    loadResidents();
-
-}
-
-// ----------------------------
-// Flat Validation
-// ----------------------------
-
-function isFlatAlreadyOccupied(flatNumber, currentId = null){
-
-    return residents.some((resident)=>{
-
-        if(currentId && resident.id === currentId){
-            return false;
-        }
-
-        return (
-            resident.flat === flatNumber &&
-            resident.status === "Approved"
-        );
-
-    });
-
-}
-
-// ----------------------------
-// Form Validation
-// ----------------------------
-
-function validateResident(){
-
-    if(fullName.value.trim()===""){
-
-        alert("Enter Full Name");
-
-        fullName.focus();
-
-        return false;
-
-    }
-
-    if(!/^[0-9]{10}$/.test(mobile.value.trim())){
-
-        alert("Enter Valid Mobile Number");
-
-        mobile.focus();
-
-        return false;
-
-    }
-
-    if(email.value.trim()===""){
-
-        alert("Enter Email Address");
-
-        email.focus();
-
-        return false;
-
-    }
-
-    if(flat.value===""){
-
-        alert("Select Flat");
-
-        flat.focus();
-
-        return false;
-
-    }
-
-    if(
-        status.value==="Approved" &&
-        isFlatAlreadyOccupied(flat.value,editResidentId)
-    ){
-
-        alert(
-            "This flat already has an approved resident."
-        );
-
-        return false;
-
-    }
-
-    return true;
-
-}
-
-
-
-// ----------------------------
-// Resident Statistics
-// ----------------------------
-
-function getResidentStatistics(){
-
-    let approved=0;
-
-    let pending=0;
-
-    residents.forEach((resident)=>{
-
-        if(resident.status==="Approved"){
-
-            approved++;
-
-        }else{
-
-            pending++;
-
-        }
-
-    });
-
-    console.log("Approved :",approved);
-
-    console.log("Pending :",pending);
-
-}
