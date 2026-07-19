@@ -1,78 +1,63 @@
+import {
+  auth,
+  db,
+  collection,
+  addDoc
+} from "./firebase.js";
 
-// ==========================================
-// AKR House Apartment Management System
-// File : register.js
-// Version : v0.3
-// ==========================================
+import {
+  createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+const form = document.getElementById("registerForm");
 
-    const form = document.getElementById("registerForm");
+form.addEventListener("submit", registerResident);
 
-    if (!form) return;
+async function registerResident(e){
 
-    form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-        e.preventDefault();
+    const fullName = document.getElementById("fullName").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const flat = document.getElementById("flat").value;
 
-        const fullName = document.getElementById("fullname").value.trim();
-        const mobile = document.getElementById("mobile").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const flat = document.getElementById("flat").value;
-        const residentType = document.getElementById("residentType").value;
-        const password = document.getElementById("password").value;
-        const confirmPassword = document.getElementById("confirmPassword").value;
+    try{
 
-        if (fullName.length < 3) {
-            alert("Please enter your full name.");
-            return;
-        }
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-        if (!/^[6-9]\d{9}$/.test(mobile)) {
-            alert("Enter a valid 10-digit mobile number.");
-            return;
-        }
+        await addDoc(
+            collection(db,"residents"),
+            {
+                uid:userCredential.user.uid,
+                fullName,
+                mobile,
+                email,
+                flat,
+                role:"resident",
+                status:"Pending",
+                createdAt:new Date()
+            }
+        );
 
-        if (!email.includes("@")) {
-            alert("Enter a valid email address.");
-            return;
-        }
+        alert(
+            "Registration successful. Please wait for admin approval."
+        );
 
-        if (flat === "") {
-            alert("Please select your flat number.");
-            return;
-        }
+        form.reset();
 
-        if (residentType === "") {
-            alert("Please select Resident Type.");
-            return;
-        }
+        window.location.href="login.html";
 
-        if (password.length < 6) {
-            alert("Password must contain at least 6 characters.");
-            return;
-        }
+    }catch(error){
 
-        if (password !== confirmPassword) {
-            alert("Passwords do not match.");
-            return;
-        }
+        alert(error.message);
 
-        // Temporary local storage
-        const resident = {
-            fullName,
-            mobile,
-            email,
-            flat,
-            residentType
-        };
+    }
 
-        localStorage.setItem("akrResident", JSON.stringify(resident));
-
-        alert("Registration Successful!\nYour account will be approved by the Admin.");
-
-        window.location.href = "login.html";
-
-    });
-
-});
+}
