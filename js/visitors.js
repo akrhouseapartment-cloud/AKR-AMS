@@ -1,59 +1,121 @@
-/* ==========================================
-   AKR AMS - visitors.js
-========================================== */
+import { db } from "./firebase.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+import {
+collection,
+getDocs,
+doc,
+setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    loadVisitors();
+const table = document.getElementById("visitorsTable");
 
-    const form = document.getElementById("visitorForm");
+const totalVisitors = document.getElementById("totalVisitors");
+const checkedInVisitors = document.getElementById("checkedInVisitors");
+const checkedOutVisitors = document.getElementById("checkedOutVisitors");
+const todayVisitors = document.getElementById("todayVisitors");
 
-    if(form){
+const searchBox = document.getElementById("searchVisitor");
+const statusFilter = document.getElementById("visitorStatusFilter");
 
-        form.addEventListener("submit", saveVisitor);
+let visitorsData = [];
 
-    }
+/* ===========================
+   Load Visitors
+=========================== */
 
-});
+async function loadVisitors(){
 
-function saveVisitor(e){
+    table.innerHTML = "";
 
-    e.preventDefault();
+    visitorsData = [];
 
-    const visitor = {
+    let total = 0;
+    let checkedIn = 0;
+    let checkedOut = 0;
+    let today = 0;
 
-        name: document.getElementById("visitorName").value.trim(),
-        phone: document.getElementById("visitorPhone").value.trim(),
-        vehicle: document.getElementById("vehicle").value.trim(),
-        purpose: document.getElementById("purpose").value,
-        date: new Date().toLocaleString()
+    const todayDate = new Date().toLocaleDateString("en-GB");
 
-    };
+    const snapshot = await getDocs(collection(db,"visitors"));
 
-    let visitors = JSON.parse(localStorage.getItem("akrVisitors")) || [];
+    snapshot.forEach((docSnap)=>{
 
-    visitors.push(visitor);
+        const data = docSnap.data();
 
-    localStorage.setItem("akrVisitors", JSON.stringify(visitors));
+        visitorsData.push({
+            id:docSnap.id,
+            ...data
+        });
 
-    alert("Visitor registered successfully.");
+        total++;
 
-    document.getElementById("visitorForm").reset();
+        if(data.status==="Checked In"){
 
-    loadVisitors();
+            checkedIn++;
+
+        }else if(data.status==="Checked Out"){
+
+            checkedOut++;
+
+        }
+
+        if(data.date===todayDate){
+
+            today++;
+
+        }
+
+        const statusClass = data.status
+            .toLowerCase()
+            .replace(/\s+/g,"-");
+
+        table.innerHTML += `
+
+<tr>
+
+<td>${docSnap.id}</td>
+
+<td>${data.name}</td>
+
+<td>${data.mobile}</td>
+
+<td>${data.flat}</td>
+
+<td>${data.purpose}</td>
+
+<td>${data.checkIn}</td>
+
+<td>${data.checkOut || "-"}</td>
+
+<td class="${statusClass}">
+${data.status}
+</td>
+
+<td>
+
+<button
+class="editVisitor"
+data-id="${docSnap.id}">
+
+Edit
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+    });
+
+    totalVisitors.textContent = total;
+    checkedInVisitors.textContent = checkedIn;
+    checkedOutVisitors.textContent = checkedOut;
+    todayVisitors.textContent = today;
 
 }
 
-function loadVisitors(){
+loadVisitors();
 
-    let visitors = JSON.parse(localStorage.getItem("akrVisitors")) || [];
 
-    const count = document.getElementById("visitorCount");
-
-    if(count){
-
-        count.textContent = visitors.length;
-
-    }
-
-}
