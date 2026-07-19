@@ -317,7 +317,8 @@ body{
 .notice-actions{
     display:flex;
     gap:10px;
-    margin-top:20px;
+    margin-top:25px;
+    margin-bottom:20px;
     flex-wrap:wrap;
 }
 
@@ -378,7 +379,8 @@ body{
 .card h3{
 
     color:#1565C0;
-
+   font-size:22px;
+    font-weight:700;
     margin-bottom:12px;
 
 }
@@ -390,7 +392,7 @@ body{
 
 position:fixed;
 
-bottom:80px;
+bottom:90px;
 
 right:20px;
 
