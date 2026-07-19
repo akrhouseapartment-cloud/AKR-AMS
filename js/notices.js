@@ -44,3 +44,16 @@ function loadNotices(){
     });
 
 }
+
+const addNoticeBtn =
+document.getElementById("addNoticeBtn");
+
+if(addNoticeBtn){
+
+addNoticeBtn.addEventListener("click",()=>{
+
+alert("Add Notice module coming soon.");
+
+});
+
+}
