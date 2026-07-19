@@ -4,153 +4,69 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resident Login | AKR AMS</title>
+<title>Login | AKR House Apartments</title>
 
 <link rel="stylesheet" href="css/style.css">
 
-<style>
-.login-box{
-    width:90%;
-    max-width:400px;
-    margin:40px auto;
-    background:#fff;
-    padding:25px;
-    border-radius:18px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.login-box h2{
-    text-align:center;
-    color:#1565C0;
-    margin-bottom:20px;
-}
-
-.logo{
-    font-size:60px;
-    text-align:center;
-    margin-bottom:15px;
-}
-
-.btn-login{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#1565C0;
-    color:white;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
-
-.btn-login:hover{
-    background:#0D47A1;
-}
-
-.note{
-    margin-top:20px;
-    text-align:center;
-    color:#777;
-    font-size:14px;
-}
-
-.back{
-    display:block;
-    text-align:center;
-    margin-top:20px;
-    text-decoration:none;
-    color:#1565C0;
-    font-weight:bold;
-}
-</style>
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<header>
-<h1>🏢 AKR House Apartment</h1>
-<p>Resident Login</p>
-</header>
+<div class="login-container">
 
-<div class="login-box">
+    <img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
 
-<div class="logo">
-🏠
-</div>
+    <h2>AKR House Apartments</h2>
 
-<h2>Login</h2>
+    <p>Apartment Management System</p>
 
-<form id="loginForm">
+    <form id="loginForm">
 
-<label>Mobile Number</label>
+        <input
+            type="tel"
+            id="mobile"
+            placeholder="Mobile Number"
+            maxlength="10"
+            required>
 
-<input
-type="tel"
-id="mobile"
-placeholder="Enter Mobile Number"
-maxlength="10"
-required>
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required>
 
-<label>Password</label>
+        <select id="role">
 
-<input
-type="password"
-id="password"
-placeholder="Enter Password"
-required>
+            <option value="">Select Role</option>
 
-<button
-type="submit"
-class="btn-login">
-Login
-</button>
+            <option value="resident">Resident</option>
 
-</form>
+            <option value="admin">Admin</option>
 
-<p class="note">
-Don't have an account?
-</p>
+        </select>
 
-<a
-href="register.html"
-class="btn">
-Register Now
-</a>
+        <button type="submit">
+            Login
+        </button>
 
-<a
-href="index.html"
-class="back">
-⬅ Back to Home
-</a>
+    </form>
+
+    <br>
+
+    <a href="register.html">
+        New Resident? Register Here
+    </a>
+
+    <br><br>
+
+    <a href="index.html">
+        ← Back to Home
+    </a>
 
 </div>
 
-<script>
-document.getElementById("loginForm").addEventListener("submit",function(e){
-
-e.preventDefault();
-
-const mobile=document.getElementById("mobile").value;
-const password=document.getElementById("password").value;
-
-if(mobile.length!=10){
-alert("Please enter a valid 10-digit mobile number.");
-return;
-}
-
-if(password.length<4){
-alert("Password must be at least 4 characters.");
-return;
-}
-
-/* Temporary login until Google Sheets integration */
-alert("Login Successful!");
-
-window.location.href="resident.html";
-
-});
-</script>
+<script src="js/auth.js"></script>
 
 </body>
 </html>
