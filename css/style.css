@@ -1,40 +1,235 @@
-body{
+/* ==========================================
+   AKR House Apartment Management System
+   style.css
+========================================== */
+
+*{
     margin:0;
     padding:0;
-    font-family:Arial,sans-serif;
-    background:#F5F7FA;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
+
+body{
+    background:#F4F7FC;
+    color:#333;
+    min-height:100vh;
+}
+
+/* Header */
+
+header{
+    background:linear-gradient(135deg,#1565C0,#42A5F5);
+    color:#fff;
+    text-align:center;
+    padding:40px 20px;
+    border-bottom-left-radius:25px;
+    border-bottom-right-radius:25px;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+header h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+header p{
+    font-size:17px;
+}
+
+/* Container */
 
 .container{
     width:90%;
-    max-width:400px;
-    margin:40px auto;
+    max-width:450px;
+    margin:30px auto;
+}
+
+/* Card */
+
+.card{
     background:#fff;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 6px 16px rgba(0,0,0,.08);
 }
 
-h1,h2{
-    text-align:center;
+.card h2{
     color:#1565C0;
+    margin-bottom:15px;
 }
 
-input{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
-    box-sizing:border-box;
+.card p{
+    color:#666;
+    line-height:1.6;
+    margin-bottom:10px;
 }
 
-button{
+/* Buttons */
+
+.btn{
+    display:block;
     width:100%;
-    padding:12px;
     background:#1565C0;
     color:white;
-    border:none;
+    text-align:center;
+    padding:15px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:bold;
+    margin-top:12px;
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#0D47A1;
+    transform:translateY(-2px);
+}
+
+/* Form */
+
+form{
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:15px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    margin-top:8px;
+    font-size:15px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    background:white;
+}
+
+th{
+    background:#1565C0;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+/* Dashboard Cards */
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.dashboard-card{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-5px);
+}
+
+.dashboard-card h3{
+    color:#1565C0;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.dashboard-card p{
+    color:#555;
+}
+
+/* Alerts */
+
+.success{
+    background:#E8F5E9;
+    color:#2E7D32;
+    padding:12px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.warning{
+    background:#FFF3E0;
+    color:#EF6C00;
+    padding:12px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.error{
+    background:#FFEBEE;
+    color:#C62828;
+    padding:12px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+/* Footer */
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#777;
+    font-size:14px;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+header h1{
+    font-size:26px;
+}
+
+header p{
+    font-size:15px;
+}
+
+.card{
+    padding:18px;
+}
+
+.btn{
+    padding:14px;
+}
+
+.dashboard-grid{
+    grid-template-columns:1fr;
+}
+
+}    border:none;
     border-radius:8px;
     font-size:16px;
     cursor:pointer;
