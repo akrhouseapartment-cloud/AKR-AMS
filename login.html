@@ -1,72 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Login | AKR House Apartments</title>
+<title>Resident Login | AKR House Apartments</title>
 
 <link rel="stylesheet" href="css/style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
 <div class="login-container">
 
-    <img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
+<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
 
-    <h2>AKR House Apartments</h2>
+<h2>Resident Login</h2>
 
-    <p>Apartment Management System</p>
+<p>Login to AKR AMS</p>
 
-    <form id="loginForm">
+<form id="loginForm">
 
-        <input
-            type="tel"
-            id="mobile"
-            placeholder="Mobile Number"
-            maxlength="10"
-            required>
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+required>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            required>
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
 
-        <select id="role">
+<button type="submit">
 
-            <option value="">Select Role</option>
+Login
 
-            <option value="resident">Resident</option>
+</button>
 
-            <option value="admin">Admin</option>
+</form>
 
-        </select>
+<p>
 
-        <button type="submit">
-            Login
-        </button>
+Don't have an account?
 
-    </form>
+<a href="register.html">
 
-    <br>
+Register Here
 
-    <a href="register.html">
-        New Resident? Register Here
-    </a>
+</a>
 
-    <br><br>
-
-    <a href="index.html">
-        ← Back to Home
-    </a>
+</p>
 
 </div>
 
-<script src="js/auth.js"></script>
+<script type="module" src="js/login.js"></script>
 
 </body>
+
 </html>
