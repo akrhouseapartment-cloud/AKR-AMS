@@ -1,40 +1,209 @@
-body{
+/* ===========================
+   AKR AMS Dashboard CSS
+   =========================== */
+
+*{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#f5f7fb;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-header{
-    background:#1565c0;
-    color:white;
-    padding:20px;
-    text-align:center;
-    box-shadow:0 2px 8px rgba(0,0,0,.2);
+body{
+    background:#f4f7fc;
+    color:#333;
+    padding-bottom:90px;
 }
+
+/* Header */
+
+.header{
+    background:#1565C0;
+    color:#fff;
+    text-align:center;
+    padding:30px 20px;
+    border-bottom-left-radius:25px;
+    border-bottom-right-radius:25px;
+    box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+
+.header h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.header p{
+    font-size:18px;
+    opacity:.9;
+}
+
+/* Dashboard */
 
 .container{
-    padding:20px;
-    display:grid;
-    gap:15px;
+    padding:18px;
 }
 
+/* Cards */
+
 .card{
-    background:white;
-    border-radius:15px;
+    background:#fff;
+    border-radius:18px;
     padding:20px;
-    box-shadow:0 4px 10px rgba(0,0,0,.1);
+    margin-bottom:18px;
+    box-shadow:0 6px 18px rgba(0,0,0,.08);
     transition:.3s;
+    cursor:pointer;
 }
 
 .card:hover{
-    transform:translateY(-4px);
+    transform:translateY(-5px);
 }
 
-.card h3{
-    margin:0 0 10px;
-    color:#1565c0;
+.card h2{
+    color:#1565C0;
+    margin-bottom:10px;
+    font-size:26px;
 }
 
+.card p{
+    font-size:18px;
+    color:#555;
+}
+
+/* Statistics */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat-box{
+    background:white;
+    border-radius:18px;
+    text-align:center;
+    padding:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.stat-box h3{
+    font-size:28px;
+    color:#1565C0;
+}
+
+.stat-box span{
+    color:#666;
+}
+
+/* Buttons */
+
+.button{
+    display:block;
+    width:100%;
+    background:#1565C0;
+    color:white;
+    text-align:center;
+    padding:15px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.button:hover{
+    background:#0D47A1;
+}
+
+/* Bottom Navigation */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#1565C0;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:12px 0;
+    box-shadow:0 -4px 10px rgba(0,0,0,.2);
+}
+
+.bottom-nav a{
+    color:white;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.bottom-nav a:hover{
+    color:#FFD54F;
+}
+
+/* Badge */
+
+.badge{
+    background:red;
+    color:white;
+    border-radius:50%;
+    padding:4px 8px;
+    font-size:11px;
+}
+
+/* Tables */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1565C0;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+/* Inputs */
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-top:10px;
+    margin-bottom:15px;
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.header h1{
+font-size:26px;
+}
+
+.card h2{
+font-size:22px;
+}
+
+.card p{
+font-size:16px;
+}
+
+.stat-box h3{
+font-size:24px;
+}
+
+}
 .card p{
     margin:0;
     color:#555;
