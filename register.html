@@ -1,94 +1,125 @@
-/* ==========================================
-   AKR AMS
-   Firebase Resident Registration
-========================================== */
+<!DOCTYPE html>
+<html lang="en">
 
-import { auth, db } from "./firebase.js";
+<head>
 
-import {
-    createUserWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+<meta charset="UTF-8">
 
-import {
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const form = document.getElementById("registerForm");
+<title>Resident Registration | AKR House Apartments</title>
 
-if (form) {
-    form.addEventListener("submit", registerResident);
-}
+<link rel="stylesheet" href="css/style.css">
 
-async function registerResident(e) {
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    e.preventDefault();
+</head>
 
-    const fullName = document.getElementById("fullName").value.trim();
-    const mobile = document.getElementById("mobile").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const flat = document.getElementById("flat").value;
+<body>
 
-    if (fullName === "") {
-        alert("Enter your full name.");
-        return;
-    }
+<div class="login-container">
 
-    if (mobile.length !== 10) {
-        alert("Enter a valid mobile number.");
-        return;
-    }
+<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
 
-    if (flat === "") {
-        alert("Select your flat.");
-        return;
-    }
+<h2>Resident Registration</h2>
 
-    try {
+<p>Create your AKR AMS account</p>
 
-        const userCredential =
-            await createUserWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
+<form id="registerForm">
 
-        await addDoc(collection(db, "residents"), {
+<input
+type="text"
+id="fullName"
+placeholder="Full Name"
+required>
 
-            uid: userCredential.user.uid,
+<input
+type="tel"
+id="mobile"
+placeholder="Mobile Number"
+maxlength="10"
+pattern="[0-9]{10}"
+required>
 
-            fullName: fullName,
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+required>
 
-            mobile: mobile,
+<input
+type="password"
+id="password"
+placeholder="Create Password"
+minlength="6"
+required>
 
-            email: email,
+<select id="flat" required>
 
-            flat: flat,
+<option value="">Select Flat Number</option>
 
-            role: "Resident",
+<option value="001">001</option>
+<option value="002">002</option>
+<option value="003">003</option>
 
-            status: "Pending",
+<option value="101">101</option>
+<option value="102">102</option>
+<option value="103">103</option>
+<option value="104">104</option>
+<option value="105">105</option>
 
-            createdAt: serverTimestamp()
+<option value="201">201</option>
+<option value="202">202</option>
+<option value="203">203</option>
+<option value="204">204</option>
+<option value="205">205</option>
 
-        });
+<option value="301">301</option>
+<option value="302">302</option>
+<option value="303">303</option>
+<option value="304">304</option>
+<option value="305">305</option>
 
-        alert(
-            "Registration completed successfully.\n\nYour account is waiting for Admin approval."
-        );
+<option value="401">401</option>
+<option value="402">402</option>
+<option value="403">403</option>
+<option value="404">404</option>
+<option value="405">405</option>
+<option value="406">406</option>
 
-        form.reset();
+<option value="501">501</option>
+<option value="502">502</option>
+<option value="503">503</option>
+<option value="504">504</option>
+<option value="505">505</option>
+<option value="506">506</option>
 
-        window.location.href = "login.html";
+</select>
 
-    } catch (error) {
+<button type="submit">
 
-        alert(error.message);
+Register
 
-        console.error(error);
+</button>
 
-    }
+</form>
 
-}
+<p>
+
+Already have an account?
+
+<a href="login.html">
+
+Login Here
+
+</a>
+
+</p>
+
+</div>
+
+<script type="module" src="js/register.js"></script>
+
+</body>
+
+</html>
