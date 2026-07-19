@@ -77,6 +77,7 @@ async function loadResidents() {
     });
 
     displayResidents(residents);
+   getResidentStatistics();
 
 }
 
@@ -260,6 +261,9 @@ async function saveResident(e){
 
 window.editResident=function(id){
 
+   if(!validateResident()){
+    return;
+   }
     const resident=residents.find(r=>r.id===id);
 
     if(!resident){
@@ -388,5 +392,121 @@ function filterResidents(){
 function refreshResidents(){
 
     loadResidents();
+
+}
+
+// ----------------------------
+// Flat Validation
+// ----------------------------
+
+function isFlatAlreadyOccupied(flatNumber, currentId = null){
+
+    return residents.some((resident)=>{
+
+        if(currentId && resident.id === currentId){
+            return false;
+        }
+
+        return (
+            resident.flat === flatNumber &&
+            resident.status === "Approved"
+        );
+
+    });
+
+}
+
+// ----------------------------
+// Form Validation
+// ----------------------------
+
+function validateResident(){
+
+    if(fullName.value.trim()===""){
+
+        alert("Enter Full Name");
+
+        fullName.focus();
+
+        return false;
+
+    }
+
+    if(!/^[0-9]{10}$/.test(mobile.value.trim())){
+
+        alert("Enter Valid Mobile Number");
+
+        mobile.focus();
+
+        return false;
+
+    }
+
+    if(email.value.trim()===""){
+
+        alert("Enter Email Address");
+
+        email.focus();
+
+        return false;
+
+    }
+
+    if(flat.value===""){
+
+        alert("Select Flat");
+
+        flat.focus();
+
+        return false;
+
+    }
+
+    if(
+        status.value==="Approved" &&
+        isFlatAlreadyOccupied(flat.value,editResidentId)
+    ){
+
+        alert(
+            "This flat already has an approved resident."
+        );
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
+
+// ----------------------------
+// Resident Statistics
+// ----------------------------
+
+function getResidentStatistics(){
+
+    let approved=0;
+
+    let pending=0;
+
+    residents.forEach((resident)=>{
+
+        if(resident.status==="Approved"){
+
+            approved++;
+
+        }else{
+
+            pending++;
+
+        }
+
+    });
+
+    console.log("Approved :",approved);
+
+    console.log("Pending :",pending);
 
 }
