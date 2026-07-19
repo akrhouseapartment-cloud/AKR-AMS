@@ -1,331 +1,443 @@
+// =====================================
+// AKR AMS - Flats Management
+// =====================================
+
 import { db } from "./firebase.js";
 
 import {
     collection,
     getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
     doc,
     getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-// ----------------------------
-// DOM Elements
-// ----------------------------
-
-const flatGrid = document.getElementById("flatGrid");
-
+const flatContainer = document.getElementById("flatContainer");
 const searchFlat = document.getElementById("searchFlat");
-
-const refreshBtn = document.getElementById("refreshBtn");
-
-const flatModal = document.getElementById("flatModal");
-
-const closeFlatModal = document.getElementById("closeFlatModal");
-
-const modalFlatNo = document.getElementById("modalFlatNo");
-
-const modalStatus = document.getElementById("modalStatus");
-
-const modalOwner = document.getElementById("modalOwner");
-
-const modalTenant = document.getElementById("modalTenant");
-
-const modalMobile = document.getElementById("modalMobile");
-
-const modalMaintenance = document.getElementById("modalMaintenance");
-
-// ----------------------------
-// Global Variable
-// ----------------------------
 
 let flats = [];
 
-// ----------------------------
+// =====================================
 // Load Flats
-// ----------------------------
+// =====================================
 
 async function loadFlats(){
 
+    flatContainer.innerHTML="";
+
+    flats=[];
+
+    let occupied=0;
+    let vacant=0;
+
     try{
 
-        const snapshot = await getDocs(collection(db,"flats"));
+        const snapshot=await getDocs(collection(db,"flats"));
 
-        flats = [];
+        snapshot.forEach((docSnap)=>{
 
-        snapshot.forEach((docItem)=>{
+            const flat={
 
-            flats.push({
+                id:docSnap.id,
 
-                id:docItem.id,
+                ...docSnap.data()
 
-                ...docItem.data()
+            };
 
-            });
+            flats.push(flat);
+
+            if(flat.status==="Occupied") occupied++;
+            else vacant++;
+
+            flatContainer.innerHTML+=createCard(flat);
 
         });
 
-        updateFlatCards();
+        document.getElementById("occupiedFlats").textContent=occupied;
 
-updateStatistics();
+        document.getElementById("vacantFlats").textContent=vacant;
 
-updateStatusColors();
+        document.getElementById("residentCount").textContent=occupied;
+
+        document.getElementById("totalFlats").textContent=occupied+vacant;
 
     }
 
     catch(error){
 
-        console.error(error);
-
-        alert("Unable to load flats.");
+        console.log(error);
 
     }
 
 }
-
-// ----------------------------
-// Update Cards
-// ----------------------------
-
-function updateFlatCards(){
-
-    flats.forEach((flat)=>{
-
-        const statusElement =
-        document.getElementById("status"+flat.id);
-
-        const ownerElement =
-        document.getElementById("owner"+flat.id);
-
-        if(!statusElement || !ownerElement){
-            return;
-        }
-
-        statusElement.textContent =
-        flat.status || "Vacant";
-
-        statusElement.className =
-        flat.status === "Occupied"
-        ? "occupied"
-        : "vacant";
-
-        ownerElement.textContent =
-        "Owner : " +
-        (flat.ownerName || "-");
-
-    });
-
-}
-
-// ----------------------------
-// Refresh
-// ----------------------------
-
-refreshBtn.addEventListener("click",loadFlats);
-
-// ----------------------------
-// Initial Load
-// ----------------------------
 
 loadFlats();
 
+// =====================================
+// Flat Card
+// =====================================
 
-// ----------------------------
-// Search Flats
-// ----------------------------
+function createCard(flat){
 
-searchFlat.addEventListener("input", () => {
+const badge=
 
-    const keyword = searchFlat.value
-        .trim()
-        .toLowerCase();
+flat.status==="Occupied"
 
-    const cards = document.querySelectorAll(".flat-card");
+?
 
-    cards.forEach((card) => {
+"status status-occupied"
 
-        const flatNumber = card.dataset.flat.toLowerCase();
+:
 
-        if(flatNumber.includes(keyword)){
-            card.style.display = "";
-        }else{
-            card.style.display = "none";
-        }
+"status status-vacant";
 
-    });
+return `
 
-});
+<div class="flat-card">
 
-// ----------------------------
-// View Flat Details
-// ----------------------------
+<h2>Flat ${flat.flatNo}</h2>
 
-window.viewFlat = async function(flatNumber){
+<p><strong>Floor :</strong> ${flat.floor}</p>
 
-    try{
+<p><strong>Resident :</strong> ${flat.residentName||"-"}</p>
 
-        const flatRef = doc(db,"flats",flatNumber);
+<p><strong>Mobile :</strong> ${flat.mobile||"-"}</p>
 
-        const flatSnap = await getDoc(flatRef);
+<p><strong>Type :</strong> ${flat.residentType||"-"}</p>
 
-        if(!flatSnap.exists()){
+<p><strong>Members :</strong> ${flat.members||0}</p>
 
-            alert("Flat not found.");
+<p><strong>Vehicle :</strong> ${flat.vehicle||"-"}</p>
 
-            return;
+<p>
 
-        }
+<span class="${badge}">
 
-        const flat = flatSnap.data();
+${flat.status}
 
-        modalFlatNo.textContent = flatNumber;
+</span>
 
-        modalStatus.textContent =
-        flat.status || "Vacant";
+</p>
 
-        modalOwner.textContent =
-        flat.ownerName || "-";
+<button
 
-        modalTenant.textContent =
-        flat.tenantName || "-";
+class="edit-btn"
 
-        modalMobile.textContent =
-        flat.mobile || "-";
+onclick="editFlat('${flat.id}')">
 
-        modalMaintenance.textContent =
-        flat.maintenance || "0";
+Edit
 
-        flatModal.style.display = "flex";
+</button>
 
-    }
+</div>
 
-    catch(error){
+`;
 
-        console.error(error);
+}
 
-        alert("Unable to load flat details.");
+
+// =====================================
+// Modal Controls
+// =====================================
+
+const modal = document.getElementById("flatModal");
+const flatForm = document.getElementById("flatForm");
+
+document.getElementById("addFlatBtn").onclick = () => {
+
+    flatForm.reset();
+
+    document.getElementById("docId").value = "";
+
+    document.getElementById("modalTitle").textContent = "Add Flat";
+
+    modal.style.display = "flex";
+
+};
+
+document.getElementById("closeModal").onclick = () => {
+
+    modal.style.display = "none";
+
+};
+
+document.getElementById("cancelBtn").onclick = () => {
+
+    modal.style.display = "none";
+
+};
+
+window.onclick = function(e){
+
+    if(e.target===modal){
+
+        modal.style.display="none";
 
     }
 
 };
 
-// ----------------------------
-// Close Modal
-// ----------------------------
+// =====================================
+// Save Flat
+// =====================================
 
-closeFlatModal.addEventListener("click",()=>{
+flatForm.addEventListener("submit",async(e)=>{
 
-    flatModal.style.display="none";
+    e.preventDefault();
 
-});
+    const id=document.getElementById("docId").value;
 
-window.addEventListener("click",(event)=>{
+    const flat={
 
-    if(event.target===flatModal){
+        flatNo:document.getElementById("flatNo").value.trim(),
 
-        flatModal.style.display="none";
+        floor:document.getElementById("floor").value,
 
-    }
+        status:document.getElementById("status").value,
 
-});
+        residentName:document.getElementById("residentName").value.trim(),
 
+        mobile:document.getElementById("mobile").value.trim(),
 
-// ----------------------------
-// Flat Statistics
-// ----------------------------
+        residentType:document.getElementById("residentType").value,
 
-function updateStatistics(){
+        members:Number(document.getElementById("members").value)||0,
 
-    const total = flats.length;
+        vehicle:document.getElementById("vehicle").value.trim()
 
-    const occupied = flats.filter(flat =>
-        (flat.status || "").toLowerCase() === "occupied"
-    ).length;
+    };
 
-    const vacant = total - occupied;
+    try{
 
-    console.log("Total Flats :", total);
-    console.log("Occupied :", occupied);
-    console.log("Vacant :", vacant);
+        if(id){
 
-    const totalElement = document.getElementById("totalFlats");
-    const occupiedElement = document.getElementById("occupiedFlats");
-    const vacantElement = document.getElementById("vacantFlats");
+            await updateDoc(doc(db,"flats",id),flat);
 
-    if(totalElement){
-        totalElement.textContent = total;
-    }
-
-    if(occupiedElement){
-        occupiedElement.textContent = occupied;
-    }
-
-    if(vacantElement){
-        vacantElement.textContent = vacant;
-    }
-
-}
-
-// ----------------------------
-// Update Status Colors
-// ----------------------------
-
-function updateStatusColors(){
-
-    flats.forEach((flat)=>{
-
-        const statusElement =
-        document.getElementById("status"+flat.id);
-
-        if(!statusElement){
-            return;
-        }
-
-        statusElement.classList.remove(
-            "occupied",
-            "vacant"
-        );
-
-        if((flat.status || "").toLowerCase() === "occupied"){
-
-            statusElement.classList.add("occupied");
+            alert("Flat updated successfully.");
 
         }else{
 
-            statusElement.classList.add("vacant");
+            await addDoc(collection(db,"flats"),flat);
+
+            alert("Flat added successfully.");
 
         }
 
+        modal.style.display="none";
+
+        loadFlats();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Unable to save flat.");
+
+    }
+
+});
+
+// =====================================
+// Edit Flat
+// =====================================
+
+window.editFlat=async(id)=>{
+
+    try{
+
+        const snap=await getDoc(doc(db,"flats",id));
+
+        if(!snap.exists()) return;
+
+        const flat=snap.data();
+
+        document.getElementById("docId").value=id;
+
+        document.getElementById("flatNo").value=flat.flatNo;
+
+        document.getElementById("floor").value=flat.floor;
+
+        document.getElementById("status").value=flat.status;
+
+        document.getElementById("residentName").value=flat.residentName||"";
+
+        document.getElementById("mobile").value=flat.mobile||"";
+
+        document.getElementById("residentType").value=flat.residentType||"Owner";
+
+        document.getElementById("members").value=flat.members||0;
+
+        document.getElementById("vehicle").value=flat.vehicle||"";
+
+        document.getElementById("modalTitle").textContent="Edit Flat";
+
+        modal.style.display="flex";
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+};
+
+// =====================================
+// Delete Flat
+// =====================================
+
+window.deleteFlat=async(id)=>{
+
+    if(!confirm("Delete this flat?")) return;
+
+    try{
+
+        await deleteDoc(doc(db,"flats",id));
+
+        loadFlats();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Unable to delete flat.");
+
+    }
+
+};
+
+
+
+// =====================================
+// Live Search
+// =====================================
+
+searchFlat.addEventListener("input", function () {
+
+    const keyword = this.value.toLowerCase().trim();
+
+    flatContainer.innerHTML = "";
+
+    const filtered = flats.filter((flat) => {
+
+        return (
+            flat.flatNo.toLowerCase().includes(keyword) ||
+            (flat.residentName || "").toLowerCase().includes(keyword) ||
+            (flat.mobile || "").includes(keyword)
+        );
+
     });
 
-}
+    if (filtered.length === 0) {
 
-// ----------------------------
-// Reload Everything
-// ----------------------------
+        flatContainer.innerHTML = `
+        <div class="flat-card">
+            <h2>No Flats Found</h2>
+            <p>No matching records available.</p>
+        </div>
+        `;
 
-async function refreshDashboard(){
+        return;
+
+    }
+
+    filtered.forEach((flat) => {
+
+        flatContainer.innerHTML += createCard(flat);
+
+    });
+
+});
+
+// =====================================
+// Occupancy Filter
+// =====================================
+
+window.filterFlats = function(status){
+
+    flatContainer.innerHTML = "";
+
+    const filtered = flats.filter(flat => flat.status === status);
+
+    if(filtered.length === 0){
+
+        flatContainer.innerHTML = `
+        <div class="flat-card">
+            <h2>No ${status} Flats</h2>
+        </div>
+        `;
+
+        return;
+
+    }
+
+    filtered.forEach(flat=>{
+
+        flatContainer.innerHTML += createCard(flat);
+
+    });
+
+};
+
+// =====================================
+// Show All Flats
+// =====================================
+
+window.showAllFlats = function(){
+
+    flatContainer.innerHTML = "";
+
+    flats.forEach(flat=>{
+
+        flatContainer.innerHTML += createCard(flat);
+
+    });
+
+};
+
+// =====================================
+// Refresh Dashboard
+// =====================================
+
+async function refreshFlats(){
 
     await loadFlats();
 
-    updateStatistics();
+}
 
-    updateStatusColors();
+refreshFlats();
+
+// Refresh every 30 seconds
+
+setInterval(refreshFlats,30000);
+
+// =====================================
+// Empty Firestore Check
+// =====================================
+
+if(flats.length===0){
+
+    flatContainer.innerHTML=`
+    <div class="flat-card">
+
+        <h2>No Flats Available</h2>
+
+        <p>Add your first flat.</p>
+
+    </div>
+    `;
 
 }
 
-// ----------------------------
-// Auto Refresh
-// ----------------------------
+// =====================================
+// Page Loaded
+// =====================================
 
-setInterval(refreshDashboard,30000);
+document.addEventListener("DOMContentLoaded",()=>{
 
-// ----------------------------
-// Refresh Button
-// ----------------------------
+    loadFlats();
 
-refreshBtn.addEventListener("click",refreshDashboard);
+});
 
-// ----------------------------
-// Initialize
-// ----------------------------
-
-refreshDashboard();
+console.log("AKR AMS Flats Module Loaded Successfully");
