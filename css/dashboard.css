@@ -1,7 +1,6 @@
-/* ==========================================
-   AKR House Apartment Management System
-   dashboard.css
-========================================== */
+/* ======================================
+   AKR AMS Dashboard
+====================================== */
 
 *{
     margin:0;
@@ -11,141 +10,275 @@
 }
 
 body{
-    background:#f4f7fc;
-    color:#222;
-    padding-bottom:90px;
+    background:#f4f7fb;
+    color:#333;
 }
 
-/* ---------- Top Bar ---------- */
+.container{
+    display:flex;
+    min-height:100vh;
+}
 
-.topbar{
+/* Sidebar */
+
+.sidebar{
+    width:260px;
     background:#1565C0;
     color:#fff;
-    padding:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    overflow-y:auto;
 }
 
-.logo-area{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.logo{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    background:#fff;
-    padding:5px;
-}
-
-.notification{
-    font-size:28px;
-    cursor:pointer;
-}
-
-/* ---------- Welcome ---------- */
-
-.welcome{
-    margin:20px;
-    background:#fff;
-    padding:20px;
-    border-radius:18px;
-    box-shadow:0 8px 18px rgba(0,0,0,.08);
-}
-
-.welcome h2{
-    color:#1565C0;
-    margin-bottom:8px;
-}
-
-.welcome p{
-    color:#666;
-}
-
-/* ---------- Dashboard Cards ---------- */
-
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:18px;
-    padding:20px;
-}
-
-.card{
-    background:#fff;
-    text-decoration:none;
-    color:#222;
-    border-radius:18px;
-    padding:22px;
+.sidebar-header{
     text-align:center;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    padding:20px;
+}
+
+.sidebar-header img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    margin-bottom:10px;
+}
+
+.sidebar-header h2{
+    font-size:22px;
+}
+
+.menu{
+    list-style:none;
+}
+
+.menu li{
+    margin:6px 10px;
+}
+
+.menu li a{
+    display:block;
+    padding:14px;
+    text-decoration:none;
+    color:white;
+    border-radius:10px;
     transition:.3s;
 }
 
-.card:hover{
-    transform:translateY(-6px);
-}
-
-.card h3{
+.menu li a:hover,
+.menu li.active a{
+    background:white;
     color:#1565C0;
-    margin-bottom:10px;
-    font-size:20px;
 }
 
-.card p{
-    color:#666;
-    font-size:14px;
-}
+/* Main */
 
-/* ---------- Bottom Navigation ---------- */
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
+.main-content{
+    margin-left:260px;
     width:100%;
-    background:#1565C0;
+    padding:25px;
+}
+
+/* Top */
+
+.topbar{
     display:flex;
-    justify-content:space-around;
-    padding:12px 0;
-    box-shadow:0 -4px 12px rgba(0,0,0,.15);
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
 }
 
-.bottom-nav a{
-    color:#fff;
-    text-decoration:none;
-    text-align:center;
-    font-size:14px;
-    font-weight:500;
+.topbar h1{
+    color:#1565C0;
 }
 
-.bottom-nav a:hover{
-    color:#BBDEFB;
+.profile{
+    background:white;
+    padding:10px 18px;
+    border-radius:30px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
-/* ---------- Mobile ---------- */
+/* Cards */
 
-@media(max-width:600px){
-
-.logo{
-    width:55px;
-    height:55px;
-}
-
-.topbar h2{
-    font-size:18px;
-}
-
-.dashboard{
-    grid-template-columns:1fr;
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:18px;
+    margin-bottom:25px;
 }
 
 .card{
+    background:white;
+    border-radius:15px;
     padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#666;
+    font-size:15px;
+}
+
+.card h2{
+    color:#1565C0;
+    margin-top:10px;
+    font-size:34px;
+}
+
+/* Panels */
+
+.panel{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.panel-header a{
+    color:#1565C0;
+    text-decoration:none;
+    font-weight:600;
+}
+
+/* Table */
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table th{
+    background:#1565C0;
+    color:white;
+    padding:12px;
+}
+
+.table td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+}
+
+/* Dashboard Row */
+
+.dashboard-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+/* Quick Actions */
+
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:15px;
+}
+
+.quick-grid button{
+    background:#1565C0;
+    color:white;
+    border:none;
+    padding:18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+    transition:.3s;
+}
+
+.quick-grid button:hover{
+    background:#0D47A1;
+}
+
+/* Buttons */
+
+.approveBtn{
+    background:#2E7D32;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.rejectBtn{
+    background:#C62828;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* Mobile */
+
+@media(max-width:900px){
+
+.sidebar{
+    width:220px;
+}
+
+.main-content{
+    margin-left:220px;
+}
+
+.dashboard-row{
+    grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:768px){
+
+.container{
+    flex-direction:column;
+}
+
+.sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+}
+
+.main-content{
+    margin-left:0;
+}
+
+.cards{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.quick-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.table{
+    font-size:13px;
+}
+
+.topbar{
+    flex-direction:column;
+    gap:15px;
+}
+
+}
+
+@media(max-width:480px){
+
+.cards{
+    grid-template-columns:1fr;
+}
+
+.quick-grid{
+    grid-template-columns:1fr;
 }
 
 }
