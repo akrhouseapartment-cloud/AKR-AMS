@@ -1,106 +1,279 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Maintenance | AKR AMS</title>
 
-<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet"
+href="../css/style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="../css/maintenance.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 </head>
 
 <body>
 
+<div class="container">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../assets/images/logopng.png"
+class="logo">
+
+<h2>AKR AMS</h2>
+
+</div>
+
+<ul class="menu">
+
+<li>
+<a href="../admin.html">🏠 Dashboard</a>
+</li>
+
+<li>
+<a href="residents.html">👥 Residents</a>
+</li>
+
+<li>
+<a href="flats.html">🏢 Flats</a>
+</li>
+
+<li class="active">
+<a href="maintenance.html">💰 Maintenance</a>
+</li>
+
+<li>
+<a href="payments.html">💳 Payments</a>
+</li>
+
+<li>
+<a href="complaints.html">📋 Complaints</a>
+</li>
+
+<li>
+<a href="visitors.html">🚶 Visitors</a>
+</li>
+
+<li>
+<a href="notices.html">📢 Notices</a>
+</li>
+
+<li>
+<a href="../admin.html">🚪 Logout</a>
+</li>
+
+</ul>
+
+</aside>
+
+<!-- Main Content -->
+
+<main class="main-content">
+
 <header class="topbar">
-
-<div class="logo-area">
-
-<img src="assets/images/logopng.png" class="logo" alt="AKR Logo">
 
 <div>
 
-<h2>Maintenance</h2>
+<h1>
 
-<p>AKR House Apartments</p>
+Maintenance Management
+
+</h1>
+
+<p>
+
+AKR House Apartments
+
+</p>
 
 </div>
 
-</div>
+<button id="generateBills">
 
-<div>💰</div>
+Generate Monthly Bills
+
+</button>
 
 </header>
 
-<section class="welcome">
+<!-- Summary Cards -->
 
-<h2>Monthly Maintenance</h2>
+<section class="summary-cards">
 
-<p>Track maintenance payments and dues.</p>
+<div class="summary-card">
 
-</section>
+<h3>Total Collection</h3>
 
-<section class="dashboard">
-
-<div class="card">
-
-<h3>Current Month</h3>
-
-<p id="month">July 2026</p>
+<h2 id="totalCollection">₹0</h2>
 
 </div>
 
-<div class="card">
+<div class="summary-card">
 
-<h3>Maintenance Amount</h3>
+<h3>Paid</h3>
 
-<p id="amount">₹1,500</p>
-
-</div>
-
-<div class="card">
-
-<h3>Payment Status</h3>
-
-<p id="status">Pending</p>
+<h2 id="paidAmount">₹0</h2>
 
 </div>
 
-<div class="card">
+<div class="summary-card">
 
-<h3>Due Date</h3>
+<h3>Pending</h3>
 
-<p id="dueDate">10 July 2026</p>
+<h2 id="pendingAmount">₹0</h2>
 
 </div>
 
-<div class="card">
+<div class="summary-card">
 
-<h3>Payment History</h3>
+<h3>Overdue</h3>
 
-<p>No payments available.</p>
+<h2 id="overdueAmount">₹0</h2>
 
 </div>
 
 </section>
 
-<nav class="bottom-nav">
+<!-- Filters -->
 
-<a href="resident.html">🏠<br>Home</a>
+<section class="panel">
 
-<a href="maintenance.html">💰<br>Maintenance</a>
+<input
+type="month"
+id="billMonth">
 
-<a href="complaints.html">🔧<br>Complaint</a>
+<input
+type="text"
+id="searchMaintenance"
+placeholder="Search Flat Number">
 
-<a href="profile.html">👤<br>Profile</a>
+</section>
 
-</nav>
+<!-- Maintenance Table -->
 
-<script src="js/maintenance.js"></script>
+<table class="maintenance-table">
+
+<thead>
+
+<tr>
+
+<th>Flat</th>
+
+<th>Owner</th>
+
+<th>Month</th>
+
+<th>Amount</th>
+
+<th>Due Date</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="maintenanceTable">
+
+</tbody>
+
+</table>
+
+  <!-- Payment Details Modal -->
+
+<div class="modal" id="paymentModal">
+
+<div class="modal-content">
+
+<h2>Maintenance Payment</h2>
+
+<label>Flat Number</label>
+
+<input
+type="text"
+id="flatNumber"
+readonly>
+
+<label>Owner Name</label>
+
+<input
+type="text"
+id="ownerName"
+readonly>
+
+<label>Month</label>
+
+<input
+type="month"
+id="paymentMonth">
+
+<label>Maintenance Amount</label>
+
+<input
+type="number"
+id="maintenanceAmount">
+
+<label>Due Date</label>
+
+<input
+type="date"
+id="dueDate">
+
+<label>Payment Status</label>
+
+<select id="paymentStatus">
+
+<option value="Pending">Pending</option>
+
+<option value="Paid">Paid</option>
+
+<option value="Overdue">Overdue</option>
+
+</select>
+
+<div class="modal-buttons">
+
+<button id="savePayment">
+
+💾 Save
+
+</button>
+
+<button id="closePaymentModal">
+
+❌ Close
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="../js/maintenance.js"></script>
+
+</main>
+
+</div>
 
 </body>
+
 </html>
+
