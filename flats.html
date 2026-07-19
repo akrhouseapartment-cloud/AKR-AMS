@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Flat Management | AKR AMS</title>
+
+<link rel="stylesheet"
+href="../css/style.css">
+
+<link rel="stylesheet"
+href="../css/flats.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- Sidebar -->
+
+<aside class="sidebar">
+
+<div class="sidebar-header">
+
+<img src="../assets/images/logopng.png"
+class="logo">
+
+<h2>AKR AMS</h2>
+
+</div>
+
+<ul class="menu">
+
+<li>
+
+<a href="../admin.html">
+
+🏠 Dashboard
+
+</a>
+
+</li>
+
+<li>
+
+<a href="residents.html">
+
+👥 Residents
+
+</a>
+
+</li>
+
+<li class="active">
+
+<a href="flats.html">
+
+🏢 Flats
+
+</a>
+
+</li>
+
+<li>
+
+<a href="maintenance.html">
+
+💰 Maintenance
+
+</a>
+
+</li>
+
+<li>
+
+<a href="payments.html">
+
+💳 Payments
+
+</a>
+
+</li>
+
+<li>
+
+<a href="complaints.html">
+
+📋 Complaints
+
+</a>
+
+</li>
+
+<li>
+
+<a href="visitors.html">
+
+🚶 Visitors
+
+</a>
+
+</li>
+
+<li>
+
+<a href="notices.html">
+
+📢 Notices
+
+</a>
+
+</li>
+
+<li>
+
+<a href="../admin.html">
+
+🚪 Logout
+
+</a>
+
+</li>
+
+</ul>
+
+</aside>
+
+<!-- Main -->
+
+<main class="main-content">
+
+<header class="topbar">
+
+<div>
+
+<h1>
+
+Flat Management
+
+</h1>
+
+<p>
+
+AKR House Apartments
+
+</p>
+
+</div>
+
+<button id="refreshBtn">
+
+Refresh
+
+</button>
+
+</header>
+
+<section class="panel">
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchFlat"
+placeholder="Search Flat Number...">
+
+</div>
+
+</section>
+
+<section
+class="flat-grid"
+id="flatGrid">
+
+  <!-- Ground Floor -->
+
+<div class="flat-card" data-flat="001">
+<h3>Flat 001</h3>
+<p>Status : <span id="status001">Vacant</span></p>
+<p id="owner001">Owner : -</p>
+<button onclick="viewFlat('001')">View</button>
+</div>
+
+<div class="flat-card" data-flat="002">
+<h3>Flat 002</h3>
+<p>Status : <span id="status002">Vacant</span></p>
+<p id="owner002">Owner : -</p>
+<button onclick="viewFlat('002')">View</button>
+</div>
+
+<div class="flat-card" data-flat="003">
+<h3>Flat 003</h3>
+<p>Status : <span id="status003">Vacant</span></p>
+<p id="owner003">Owner : -</p>
+<button onclick="viewFlat('003')">View</button>
+</div>
+
+<!-- First Floor -->
+
+<div class="flat-card" data-flat="101">
+<h3>Flat 101</h3>
+<p>Status : <span id="status101">Vacant</span></p>
+<p id="owner101">Owner : -</p>
+<button onclick="viewFlat('101')">View</button>
+</div>
+
+<div class="flat-card" data-flat="102">
+<h3>Flat 102</h3>
+<p>Status : <span id="status102">Vacant</span></p>
+<p id="owner102">Owner : -</p>
+<button onclick="viewFlat('102')">View</button>
+</div>
+
+<div class="flat-card" data-flat="103">
+<h3>Flat 103</h3>
+<p>Status : <span id="status103">Vacant</span></p>
+<p id="owner103">Owner : -</p>
+<button onclick="viewFlat('103')">View</button>
+</div>
+
+<div class="flat-card" data-flat="104">
+<h3>Flat 104</h3>
+<p>Status : <span id="status104">Vacant</span></p>
+<p id="owner104">Owner : -</p>
+<button onclick="viewFlat('104')">View</button>
+</div>
+
+<div class="flat-card" data-flat="105">
+<h3>Flat 105</h3>
+<p>Status : <span id="status105">Vacant</span></p>
+<p id="owner105">Owner : -</p>
+<button onclick="viewFlat('105')">View</button>
+</div>
+
+<!-- Second Floor -->
+
+<div class="flat-card" data-flat="201">
+<h3>Flat 201</h3>
+<p>Status : <span id="status201">Vacant</span></p>
+<p id="owner201">Owner : -</p>
+<button onclick="viewFlat('201')">View</button>
+</div>
+
+<div class="flat-card" data-flat="202">
+<h3>Flat 202</h3>
+<p>Status : <span id="status202">Vacant</span></p>
+<p id="owner202">Owner : -</p>
+<button onclick="viewFlat('202')">View</button>
+</div>
+
+<div class="flat-card" data-flat="203">
+<h3>Flat 203</h3>
+<p>Status : <span id="status203">Vacant</span></p>
+<p id="owner203">Owner : -</p>
+<button onclick="viewFlat('203')">View</button>
+</div>
+
+<div class="flat-card" data-flat="204">
+<h3>Flat 204</h3>
+<p>Status : <span id="status204">Vacant</span></p>
+<p id="owner204">Owner : -</p>
+<button onclick="viewFlat('204')">View</button>
+</div>
+
+<div class="flat-card" data-flat="205">
+<h3>Flat 205</h3>
+<p>Status : <span id="status205">Vacant</span></p>
+<p id="owner205">Owner : -</p>
+<button onclick="viewFlat('205')">View</button>
+</div>
+
+  <!-- Third Floor -->
+
+<div class="flat-card" data-flat="301">
+<h3>Flat 301</h3>
+<p>Status : <span id="status301">Vacant</span></p>
+<p id="owner301">Owner : -</p>
+<button onclick="viewFlat('301')">View</button>
+</div>
+
+<div class="flat-card" data-flat="302">
+<h3>Flat 302</h3>
+<p>Status : <span id="status302">Vacant</span></p>
+<p id="owner302">Owner : -</p>
+<button onclick="viewFlat('302')">View</button>
+</div>
+
+<div class="flat-card" data-flat="303">
+<h3>Flat 303</h3>
+<p>Status : <span id="status303">Vacant</span></p>
+<p id="owner303">Owner : -</p>
+<button onclick="viewFlat('303')">View</button>
+</div>
+
+<div class="flat-card" data-flat="304">
+<h3>Flat 304</h3>
+<p>Status : <span id="status304">Vacant</span></p>
+<p id="owner304">Owner : -</p>
+<button onclick="viewFlat('304')">View</button>
+</div>
+
+<div class="flat-card" data-flat="305">
+<h3>Flat 305</h3>
+<p>Status : <span id="status305">Vacant</span></p>
+<p id="owner305">Owner : -</p>
+<button onclick="viewFlat('305')">View</button>
+</div>
+
+<!-- Fourth Floor -->
+
+<div class="flat-card" data-flat="401">
+<h3>Flat 401</h3>
+<p>Status : <span id="status401">Vacant</span></p>
+<p id="owner401">Owner : -</p>
+<button onclick="viewFlat('401')">View</button>
+</div>
+
+<div class="flat-card" data-flat="402">
+<h3>Flat 402</h3>
+<p>Status : <span id="status402">Vacant</span></p>
+<p id="owner402">Owner : -</p>
+<button onclick="viewFlat('402')">View</button>
+</div>
+
+<div class="flat-card" data-flat="403">
+<h3>Flat 403</h3>
+<p>Status : <span id="status403">Vacant</span></p>
+<p id="owner403">Owner : -</p>
+<button onclick="viewFlat('403')">View</button>
+</div>
+
+<div class="flat-card" data-flat="404">
+<h3>Flat 404</h3>
+<p>Status : <span id="status404">Vacant</span></p>
+<p id="owner404">Owner : -</p>
+<button onclick="viewFlat('404')">View</button>
+</div>
+
+<div class="flat-card" data-flat="405">
+<h3>Flat 405</h3>
+<p>Status : <span id="status405">Vacant</span></p>
+<p id="owner405">Owner : -</p>
+<button onclick="viewFlat('405')">View</button>
+</div>
+
+<div class="flat-card" data-flat="406">
+<h3>Flat 406</h3>
+<p>Status : <span id="status406">Vacant</span></p>
+<p id="owner406">Owner : -</p>
+<button onclick="viewFlat('406')">View</button>
+</div>
+
+<!-- Fifth Floor -->
+
+<div class="flat-card" data-flat="501">
+<h3>Flat 501</h3>
+<p>Status : <span id="status501">Vacant</span></p>
+<p id="owner501">Owner : -</p>
+<button onclick="viewFlat('501')">View</button>
+</div>
+
+<div class="flat-card" data-flat="502">
+<h3>Flat 502</h3>
+<p>Status : <span id="status502">Vacant</span></p>
+<p id="owner502">Owner : -</p>
+<button onclick="viewFlat('502')">View</button>
+</div>
+
+<div class="flat-card" data-flat="503">
+<h3>Flat 503</h3>
+<p>Status : <span id="status503">Vacant</span></p>
+<p id="owner503">Owner : -</p>
+<button onclick="viewFlat('503')">View</button>
+</div>
+
+<div class="flat-card" data-flat="504">
+<h3>Flat 504</h3>
+<p>Status : <span id="status504">Vacant</span></p>
+<p id="owner504">Owner : -</p>
+<button onclick="viewFlat('504')">View</button>
+</div>
+
+<div class="flat-card" data-flat="505">
+<h3>Flat 505</h3>
+<p>Status : <span id="status505">Vacant</span></p>
+<p id="owner505">Owner : -</p>
+<button onclick="viewFlat('505')">View</button>
+</div>
+
+<div class="flat-card" data-flat="506">
+<h3>Flat 506</h3>
+<p>Status : <span id="status506">Vacant</span></p>
+<p id="owner506">Owner : -</p>
+<button onclick="viewFlat('506')">View</button>
+</div>
+
+</section>
+
+<!-- Flat Details Modal -->
+
+<div class="modal" id="flatModal">
+
+<div class="modal-content">
+
+<h2>Flat Details</h2>
+
+<p><strong>Flat:</strong> <span id="modalFlatNo"></span></p>
+
+<p><strong>Status:</strong> <span id="modalStatus"></span></p>
+
+<p><strong>Owner:</strong> <span id="modalOwner"></span></p>
+
+<p><strong>Tenant:</strong> <span id="modalTenant"></span></p>
+
+<p><strong>Mobile:</strong> <span id="modalMobile"></span></p>
+
+<p><strong>Maintenance:</strong> ₹<span id="modalMaintenance"></span></p>
+
+<button id="closeFlatModal">
+
+Close
+
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script type="module" src="../js/flats.js"></script>
+
+</body>
+
+</html>
